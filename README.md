@@ -9,7 +9,7 @@
 - 기숙사생을 위한 커뮤니티 사이트
 
 ## 프로젝트 이미지
-![KakaoTalk_20241107_211911883](https://github.com/user-attachments/assets/6762b9cf-c9c0-4301-9c72-93c26e210e0c)
+![프로젝트 이미지](./images/KakaoTalk_20241107_211911883.jpg)
 
 ## 프로젝트 일정
 ### 1주차 (11월 12일 ~ 11월 18일)
