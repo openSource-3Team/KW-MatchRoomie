@@ -25,14 +25,16 @@
 ![프로젝트 이미지3](./images/Match_page_1.png)
 ![프로젝트 이미지4](./images/Match_page_2.png)
 ![프로젝트 이미지5](https://github.com/user-attachments/assets/5249ae65-2902-4a7e-a68e-c8fe052daea5)
-
+![프로젝트 이미지6](./images/스크린샷%202024-11-29%20204443.png)
+![프로젝트 이미지7](./images/스크린샷%202024-11-29%20204453.png)
+![프로젝트 이미지8](./images/스크린샷%202024-11-29%20204504.png)
 
 ### Individual Progress Status  
 **황인규 ([Commit Link]())**
 - 전체 API 약 80% 개발 완료
 
 **정주연 ([Commit Link]())**
-- 홈 페이지, 로그인 관련 페이지 뷰 구현 완료
+- 홈 페이지, 로그인 관련 페이지, 커뮤니티 관련 뷰 구현 완료
 
 **김소정 ([Commit Link](https://github.com/openSource-3Team/Frontend/pull/13/commits/2a0783542b4965d55ced0f2d36dc1345a064a87b))**
 - 매칭 페이지 뷰 구현 완료
