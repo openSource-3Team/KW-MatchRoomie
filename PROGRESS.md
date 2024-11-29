@@ -30,7 +30,7 @@
 ![프로젝트 이미지8](./images/스크린샷%202024-11-29%20204504.png)
 
 ### Individual Progress Status  
-**황인규 ([Commit Link]())**
+**황인규 ([Commit Link](https://github.com/openSource-3Team/KW-MatchRoomie/pull/6/commits))**
 - 전체 API 약 80% 개발 완료
 
 **정주연 ([Commit Link](https://github.com/openSource-3Team/Frontend/commit/3b0430d1396aaa8ca9a60466076357d4b565405b))**
