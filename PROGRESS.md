@@ -33,7 +33,7 @@
 **황인규 ([Commit Link]())**
 - 전체 API 약 80% 개발 완료
 
-**정주연 ([Commit Link]())**
+**정주연 ([Commit Link](https://github.com/openSource-3Team/Frontend/commit/3b0430d1396aaa8ca9a60466076357d4b565405b))**
 - 홈 페이지, 로그인 관련 페이지, 커뮤니티 관련 뷰 구현 완료
 
 **김소정 ([Commit Link](https://github.com/openSource-3Team/Frontend/pull/13/commits/2a0783542b4965d55ced0f2d36dc1345a064a87b))**
