@@ -27,11 +27,11 @@
 ![프로젝트 이미지4](./images/KakaoTalk_20241129_120923362.png)
 
 ### Individual Progress Status  
-- 황인규 ([Commit Link]())
-  - 전체 API 약 80% 개발 완료
-- 정주연 ([Commit Link]())
-  - 홈 페이지, 로그인 관련 페이지 뷰 구현 완료
-- 김소정 ([Commit Link]())
-  -매칭 페이지 뷰 구현 완료
-- 최현서 ([Commit Link]())
-  - 프로필 페이지 뷰 구현 완료
+**황인규 ([Commit Link]())**
+전체 API 약 80% 개발 완료
+**정주연 ([Commit Link]())**
+홈 페이지, 로그인 관련 페이지 뷰 구현 완료
+**김소정 ([Commit Link]())**
+매칭 페이지 뷰 구현 완료
+**최현서 ([Commit Link]())**
+프로필 페이지 뷰 구현 완료
