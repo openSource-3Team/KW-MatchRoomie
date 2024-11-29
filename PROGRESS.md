@@ -37,5 +37,5 @@
 **김소정 ([Commit Link](https://github.com/openSource-3Team/Frontend/pull/13/commits/2a0783542b4965d55ced0f2d36dc1345a064a87b))**
 - 매칭 페이지 뷰 구현 완료
 
-**최현서 ([Commit Link]())**
+**최현서 ([Commit Link](https://github.com/openSource-3Team/Frontend/pull/9/commits/2c2cfd794a66b088666ba6fd6a299f85fd288a89))**
 - 프로필 페이지 뷰 구현 완료
