@@ -1,11 +1,10 @@
 import { userRepository } from "../repositories/user.repository.js";
-import { userDTO } from "../dtos/user.dto.js";
 
 export const userService = {
 	registerUser: async (email, password) => {
 		const existingUser = await userRepository.findByEmail(email);
 		if (existingUser) {
-			throw new Error("Email already exists");
+			throw new Error("이미 존재하는 아이디 입니다.");
 		}
 
 		const newUser = await userRepository.createUser({
