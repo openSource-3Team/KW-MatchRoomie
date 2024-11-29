@@ -22,8 +22,8 @@
 ### Project ScreenShot
 
 ![프로젝트 이미지1](./images/KakaoTalk_20241129_120923362_01.png)
-![프로젝트 이미지2](./images/KakaoTalk_20241128_185523848_01.png)
-![프로젝트 이미지3](./images/KakaoTalk_20241128_185523848.png)
+![프로젝트 이미지2](./images/Match_page_1.png)
+![프로젝트 이미지3](./images/Match_page_2.png)
 ![프로젝트 이미지4](./images/KakaoTalk_20241129_120923362.png)
 
 ### Individual Progress Status  
@@ -33,7 +33,7 @@
 **정주연 ([Commit Link]())**
 - 홈 페이지, 로그인 관련 페이지 뷰 구현 완료
 
-**김소정 ([Commit Link]())**
+**김소정 ([Commit Link](https://github.com/openSource-3Team/Frontend/pull/13/commits/2a0783542b4965d55ced0f2d36dc1345a064a87b))**
 - 매칭 페이지 뷰 구현 완료
 
 **최현서 ([Commit Link]())**
