@@ -15,43 +15,43 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique(map: "email") @db.VarChar(255)
-  password      String   @db.VarChar(255)
-  name          String   @db.VarChar(100)
-  dormitory     String   @db.VarChar(15)
-  department    String   @db.VarChar(15)
-  gender        String   @db.VarChar(15)
-  studentId     String   @db.VarChar(15)
-  lifestyle     String   @db.VarChar(15)
-  birth         DateTime @db.Date
-  isSmoking     Boolean  @map("is_smoking") 
-  imageUrl      String?  @map("image_url") @db.VarChar(255)
-  wakeUpTime    DateTime @map("wake_up_time") @db.Time
-  sleepingTime  DateTime @map("sleeping_time") @db.Time
-  lightOutTime  DateTime @map("light_out_time") @db.Time
-  showerTime    DateTime @map("shower_time") @db.Time
-  sleepingHabits SleepingHabit[]
-  acLevel       String  @map("ac_level") @db.VarChar(15)
-  posts    Post[]
+  id             Int      @id @default(autoincrement())
+  email          String?  @unique(map: "email") @db.VarChar(255) // 선택적
+  password       String?  @db.VarChar(255)                      // 선택적
+  name           String?  @db.VarChar(100)                      // 선택적
+  dormitory      String?  @db.VarChar(15)                       // 선택적
+  department     String?  @db.VarChar(15)                       // 선택적
+  gender         String?  @db.VarChar(15)                       // 선택적
+  studentId      String?  @db.VarChar(15)                       // 선택적
+  lifestyle      String?  @db.VarChar(15)                       // 선택적
+  birth          DateTime? @db.Date                             // 선택적
+  isSmoking      Boolean?  @map("is_smoking")                   // 선택적
+  imageUrl       String?  @map("image_url") @db.VarChar(255)    // 선택적
+  wakeUpTime     DateTime? @map("wake_up_time") @db.Time        // 선택적
+  sleepingTime   DateTime? @map("sleeping_time") @db.Time       // 선택적
+  lightOutTime   DateTime? @map("light_out_time") @db.Time      // 선택적
+  showerTime     DateTime? @map("shower_time") @db.Time         // 선택적
+  sleepingHabits SleepingHabit[]                               // 관계는 유지
+  acLevel        String?  @map("ac_level") @db.VarChar(15)      // 선택적
+  posts          Post[]                                       // 관계는 유지
 
   @@map("user")
 }
 
 model SleepingHabit {
-  id         Int    @id @default(autoincrement())
-  habit      String @db.VarChar(255) // 잠버릇 내용
-  userId     Int    @map("user_id") // User와 연결
-  user       User   @relation(fields: [userId], references: [id])
+  id         Int?    @id @default(autoincrement())         // 선택적
+  habit      String? @db.VarChar(255)                     // 선택적
+  userId     Int?    @map("user_id")                      // 선택적
+  user       User?   @relation(fields: [userId], references: [id]) // 선택적 관계
 
   @@map("sleeping_habit")
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  content   String
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now())
+  id        Int?      @id @default(autoincrement())        // 선택적
+  title     String?   @db.VarChar(255)                    // 선택적
+  content   String?                                       // 선택적
+  authorId  Int?                                          // 선택적
+  author    User?     @relation(fields: [authorId], references: [id]) // 선택적 관계
+  createdAt DateTime? @default(now())                     // 선택적
 }
