@@ -7,8 +7,11 @@ const options = {
 			version: "0.0.1",
 			description: "KW_MatchRoomie API with express, API 설명",
 		},
-		host: "http://15.165.223.198:3000",
-		basepath: "../",
+		servers: [
+	      {
+		url: "http://15.165.223.198:3000", // EC2 퍼블릭 IP와 포트
+	      },
+	    ],
 	},
 	apis: ["./src/routes/*.js", "./swagger/*"],
 };
