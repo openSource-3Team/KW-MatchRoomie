@@ -39,7 +39,7 @@ model User {
 }
 
 model SleepingHabit {
-  id         Int?    @id @default(autoincrement())         // 선택적
+  id         Int    @id @default(autoincrement())         // 선택적
   habit      String? @db.VarChar(255)                     // 선택적
   userId     Int?    @map("user_id")                      // 선택적
   user       User?   @relation(fields: [userId], references: [id]) // 선택적 관계
@@ -48,7 +48,7 @@ model SleepingHabit {
 }
 
 model Post {
-  id        Int?      @id @default(autoincrement())        // 선택적
+  id        Int      @id @default(autoincrement())        // 선택적
   title     String?   @db.VarChar(255)                    // 선택적
   content   String?                                       // 선택적
   authorId  Int?                                          // 선택적
