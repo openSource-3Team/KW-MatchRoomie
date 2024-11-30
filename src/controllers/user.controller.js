@@ -1,5 +1,5 @@
 import { userService } from "../services/user.service.js";
-import { response } from "../config/response.js";
+import { response } from "../../config/response.js";
 import { status } from "../config/status.js";
 
 export const userController = {
