@@ -54,6 +54,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: 22
         script: |
+          cd /
           sudo docker stop node-app || true # 기존 컨테이너 중지
           sudo docker rm node-app || true  # 기존 컨테이너 삭제
           sudo docker pull ${{ secrets.DOCKER_REPO }}
