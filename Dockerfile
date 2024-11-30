@@ -12,6 +12,7 @@ RUN npm install
 
 # 애플리케이션 파일 복사
 COPY . .
+COPY .env .env
 
 # 애플리케이션 실행 포트 설정
 EXPOSE 3000
