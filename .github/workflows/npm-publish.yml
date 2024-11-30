@@ -68,4 +68,4 @@ jobs:
           sudo docker stop node-app || true # 기존 컨테이너 중지
           sudo docker rm node-app || true  # 기존 컨테이너 삭제
           sudo docker pull ${{ secrets.DOCKER_REPO }}
-          sudo docker run -d -p 3000:3000 --name node-app --env-file .env ${{ secrets.DOCKER_REPO }}
+          sudo docker run -d -p 3000:3000 --name node-app --env-file /home/ubuntu/.env ${{ secrets.DOCKER_REPO }}
