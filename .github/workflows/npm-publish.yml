@@ -59,7 +59,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.KEY }}
         source: ".env"
-        target: "/home/ubuntu/.env"
+        target: "/home/ubuntu/"
         overwrite: true
 
     # 전송 후 검증
