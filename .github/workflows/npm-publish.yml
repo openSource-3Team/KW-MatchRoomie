@@ -25,7 +25,8 @@ jobs:
     # .env 파일 생성
     - name: Create .env file
       run: |
-        echo "${{ secrets.ENV }}" > .env
+        touch ./.env
+        echo "${{ secrets.ENV }}" > ./.env
       shell: bash
 
     # Node.js 프로젝트 의존성 설치 및 빌드
