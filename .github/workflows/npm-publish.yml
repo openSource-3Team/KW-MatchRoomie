@@ -22,16 +22,7 @@ jobs:
       with:
         node-version: '20'
 
-    # .env 파일 생성 및 환경 변수 로드
-    - name: Create .env file from ENV
-      run: |
-        # Create a .env file with the content from GitHub Secrets
-        echo "${{ secrets.ENV }}" > .env
-        cat .env  # Verify the content of the .env file
-        ls -l .env  # Ensure it's a file, not a directory
-      shell: bash
-
-    # 원격 서버의 .env 초기화
+    # .env 초기화
     - name: Initialize remote .env path
       uses: appleboy/ssh-action@v0.1.6
       with:
@@ -45,8 +36,8 @@ jobs:
           elif [ -f "/home/ubuntu/.env" ]; then
             sudo rm /home/ubuntu/.env
           fi
-
-    # .env 파일 원격 서버로 전송
+    
+    # .env 파일 전송
     - name: Transfer .env to remote server
       uses: appleboy/scp-action@v0.1.3
       with:
@@ -56,6 +47,26 @@ jobs:
         source: ".env"
         target: "/home/ubuntu/.env"
         overwrite: true
+
+    # 전송 후 검증
+    - name: Verify .env file on remote server
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.HOST }}
+        username: ubuntu
+        key: ${{ secrets.KEY }}
+        port: 22
+        script: |
+          if [ -d "/home/ubuntu/.env" ]; then
+            echo "Error: .env is a directory!"
+            exit 1
+          elif [ -f "/home/ubuntu/.env" ]; then
+            echo ".env is a valid file."
+            cat /home/ubuntu/.env
+          else
+            echo "Error: .env does not exist."
+            exit 1
+          fi
 
     # Node.js 프로젝트 의존성 설치 및 빌드
     - name: Install dependencies and build
