@@ -1,7 +1,24 @@
 import { prisma } from "../../config/db.config.js";
 
 export const userRepository = {
-	createUser: (data) => prisma.user.create({ data }),
+	createUser: (data) => {
+		// 선택적 필드에 null을 설정하거나 아예 삭제
+		const userData = {
+			...data,
+			birth: data.birth || null, // birth가 없으면 null로 처리
+			isSmoking: data.isSmoking || null,
+			imageUrl: data.imageUrl || null,
+			wakeUpTime: data.wakeUpTime || null,
+			sleepingTime: data.sleepingTime || null,
+			lightOutTime: data.lightOutTime || null,
+			showerTime: data.showerTime || null,
+			acLevel: data.acLevel || null,
+		};
+
+		return prisma.user.create({
+			data: userData,
+		});
+	},
 	findByEmail: (email) => prisma.user.findUnique({ where: { email } }),
 	updatePassword: (id, newPassword) =>
 		prisma.user.update({ where: { id }, data: { password: newPassword } }),
