@@ -10,6 +10,9 @@ COPY package*.json ./
 # 의존성 설치
 RUN npm install
 
+# Prisma Client 생성
+RUN npx prisma generate
+
 # 애플리케이션 파일 복사
 COPY . .
 
