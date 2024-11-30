@@ -28,6 +28,8 @@ jobs:
         cd ./
         touch ./.env
         echo "${{ secrets.ENV }}" > ./.env
+        ls -la .env # 파일 생성 확인
+        cat .env    # 내용 확인
       shell: bash
 
     # Node.js 프로젝트 의존성 설치 및 빌드
