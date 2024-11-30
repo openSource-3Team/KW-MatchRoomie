@@ -39,6 +39,7 @@ jobs:
         key: ${{ secrets.KEY }}
         source: ".env"
         target: "/home/ubuntu/.env"
+        overwrite: true # 기존 파일 덮어쓰기
 
     # Node.js 프로젝트 의존성 설치 및 빌드
     - name: Install dependencies and build
