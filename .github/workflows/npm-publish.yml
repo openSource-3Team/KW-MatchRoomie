@@ -25,10 +25,10 @@ jobs:
     # .env 파일 생성 및 환경 변수 로드
     - name: Create .env file from ENV
       run: |
+        # Create a .env file with the content from GitHub Secrets
         echo "${{ secrets.ENV }}" > .env
-        export $(cat .env | xargs) # 환경 변수로 로드
-        ls -la .env # 파일 생성 확인
-        cat .env    # 내용 확인
+        cat .env  # Verify the content of the .env file
+        ls -l .env  # Ensure it's a file, not a directory
       shell: bash
 
     # 원격 서버의 .env 초기화
@@ -79,8 +79,6 @@ jobs:
         key: ${{ secrets.KEY }}
         port: 22
         script: |
-          sudo docker container stop $(sudo docker ps -q --filter ancestor=${{ secrets.DOCKER_REPO }}) || true
-          sudo docker container rm $(sudo docker ps -a -q --filter ancestor=${{ secrets.DOCKER_REPO }}) || true
-          sudo docker image rm ${{ secrets.DOCKER_REPO }} || true
+          sudo docker image rm ${{ secrets.DOCKER_REPO }}
           sudo docker pull ${{ secrets.DOCKER_REPO }}
-          sudo docker run -d -p 8080:8080 --env-file /home/ubuntu/.env ${{ secrets.DOCKER_REPO }}
+          sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_REPO }}
