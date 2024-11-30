@@ -25,6 +25,7 @@ jobs:
     # .env 파일 생성
     - name: Create .env file
       run: |
+        cd ./
         touch ./.env
         echo "${{ secrets.ENV }}" > ./.env
       shell: bash
