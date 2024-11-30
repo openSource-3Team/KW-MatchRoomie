@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # 애플리케이션 실행 명령어
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
