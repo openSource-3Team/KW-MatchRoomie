@@ -2,6 +2,7 @@ import SwaggerJsdoc from "swagger-jsdoc";
 
 const options = {
 	definition: {
+		openapi: "3.0.0",
 		info: {
 			title: "KW_MatchRoomie API",
 			version: "0.0.1",
