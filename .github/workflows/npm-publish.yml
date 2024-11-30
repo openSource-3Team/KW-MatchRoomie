@@ -41,9 +41,13 @@ jobs:
         port: 22
         script: |
           if [ -d "/home/ubuntu/.env" ]; then
+            echo ".env is a directory. Removing it..."
             sudo rm -rf /home/ubuntu/.env
           elif [ -f "/home/ubuntu/.env" ]; then
+            echo ".env is a file. Removing it..."
             sudo rm /home/ubuntu/.env
+          else
+            echo ".env does not exist."
           fi
     
     # .env 파일 전송
