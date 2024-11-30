@@ -22,6 +22,15 @@ jobs:
       with:
         node-version: '20'
 
+    # .env 파일 생성
+    - name: Create .env file from ENV
+      run: |
+        echo "${{ secrets.ENV }}" > .env
+        echo "Generated .env file:"
+        cat .env
+        ls -l .env
+      shell: bash
+      
     # .env 초기화
     - name: Initialize remote .env path
       uses: appleboy/ssh-action@v0.1.6
