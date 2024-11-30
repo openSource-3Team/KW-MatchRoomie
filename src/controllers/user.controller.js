@@ -1,14 +1,17 @@
 import { userService } from "../services/user.service.js";
+import { response } from "../config/response.js";
+import { status } from "../config/status.js";
 
 export const userController = {
 	register: async (req, res) => {
-		const { email, password } = req.body;
-
 		try {
+			const { email, password } = req.body;
 			const result = await userService.registerUser(email, password);
-			res.status(201).json(result);
+			res.status(status.SUCCESS.status).send(response(status.SUCCESS, result));
 		} catch (err) {
-			res.status(400).json({ error: err.message });
+			res
+				.status(status.BAD_REQUEST.status)
+				.send(response(status.BAD_REQUEST, { error: err.message }));
 		}
 	},
 
@@ -16,9 +19,11 @@ export const userController = {
 		try {
 			const { email, password } = req.body;
 			const result = await userService.loginUser(email, password);
-			res.status(200).json(result);
+			res.status(status.SUCCESS.status).send(response(status.SUCCESS, result));
 		} catch (err) {
-			res.status(401).json({ error: err.message });
+			res
+				.status(status.UNAUTHORIZED.status)
+				.send(response(status.UNAUTHORIZED, { error: err.message }));
 		}
 	},
 
@@ -26,9 +31,11 @@ export const userController = {
 		try {
 			const { email, newPassword } = req.body;
 			const result = await userService.resetPassword(email, newPassword);
-			res.status(200).json(result);
+			res.status(status.SUCCESS.status).send(response(status.SUCCESS, result));
 		} catch (err) {
-			res.status(404).json({ error: err.message });
+			res
+				.status(status.BAD_REQUEST.status)
+				.send(response(status.BAD_REQUEST, { error: err.message }));
 		}
 	},
 
@@ -37,19 +44,35 @@ export const userController = {
 			const { id } = req.params;
 			const profileData = req.body;
 			const result = await userService.updateProfile(Number(id), profileData);
-			res.status(200).json(result);
+			res.status(status.SUCCESS.status).send(response(status.SUCCESS, result));
 		} catch (err) {
-			res.status(400).json({ error: err.message });
+			res
+				.status(status.BAD_REQUEST.status)
+				.send(response(status.BAD_REQUEST, { error: err.message }));
 		}
 	},
 
 	getUserById: async (req, res) => {
 		try {
-			const { id } = req.params; // userId를 경로 파라미터에서 가져옴
-			const user = await userService.getUserById(Number(id)); // id를 숫자로 변환
-			res.status(200).json(user);
+			const { id } = req.params;
+			const result = await userService.getUserById(Number(id));
+			res.status(status.SUCCESS.status).send(response(status.SUCCESS, result));
 		} catch (err) {
-			res.status(404).json({ error: err.message });
+			res
+				.status(status.MEMBER_NOT_FOUND.status)
+				.send(response(status.MEMBER_NOT_FOUND, { error: err.message }));
+		}
+	},
+
+	filterUsers: async (req, res) => {
+		try {
+			const filters = req.query;
+			const result = await userService.filterUsers(filters);
+			res.status(status.SUCCESS.status).send(response(status.SUCCESS, result));
+		} catch (err) {
+			res
+				.status(status.BAD_REQUEST.status)
+				.send(response(status.BAD_REQUEST, { error: err.message }));
 		}
 	},
 };
