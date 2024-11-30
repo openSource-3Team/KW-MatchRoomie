@@ -7,7 +7,7 @@ const options = {
 			version: "0.0.1",
 			description: "KW_MatchRoomie API with express, API 설명",
 		},
-		host: "localhost:3000",
+		host: "http://15.165.223.198:3000",
 		basepath: "../",
 	},
 	apis: ["./src/routes/*.js", "./swagger/*"],
