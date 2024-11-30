@@ -1,9 +1,13 @@
 import express from "express";
-import { tempRouter } from "./src/routes/temp.route";
+import { tempRouter } from "./src/routes/temp.route.js";
+import { userRouter } from "./src/routes/user.route.js";
+//import { sleepingHabitRouter } from "./src/routes/sleepingHabbit.route.js";
+import { postRouter } from "./src/routes/post.route.js";
 import { response } from "./config/response";
 import { status } from "./config/response.status";
 import { BaseError } from "./config/error";
 import { specs } from "./config/swagger.config.js";
+import cors from "cors";
 import SwaggerUi from "swagger-ui-express";
 
 const app = express();
@@ -18,8 +22,9 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // router setting
 app.use("/temp", tempRouter);
-app.use("/users", userRoutes);
-app.use("/habits", sleepingHabitRoutes);
+app.use("/users", userRouter);
+app.use("/posts", postRouter);
+//app.use("/habits", sleepingHabitRouter);
 
 app.use((req, res, next) => {
 	const err = new BaseError(status.BAD_REQUEST);

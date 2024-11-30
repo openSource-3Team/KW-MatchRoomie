@@ -1,4 +1,4 @@
-import { prisma } from "../config/prismaClient.js";
+import { prisma } from "../../db.config.js";
 
 export const sleepingHabitRepository = {
 	createHabit: (data) => prisma.sleepingHabit.create({ data }),

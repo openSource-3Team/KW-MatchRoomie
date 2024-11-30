@@ -1,8 +1,8 @@
-import express from "express";
-import { sleepingHabitController } from "../controllers/sleepingHabit.controller.js";
+// import express from "express";
+// import { sleepingHabitController } from "../controllers/sleepingHabbit.controller.js";
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post("/:userId", sleepingHabitController.addHabit);
+// router.post("/:userId", sleepingHabitController.addHabit);
 
-export default router;
+// export default router;

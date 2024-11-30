@@ -42,4 +42,14 @@ export const userController = {
 			res.status(400).json({ error: err.message });
 		}
 	},
+
+	getUserById: async (req, res) => {
+		try {
+			const { id } = req.params; // userId를 경로 파라미터에서 가져옴
+			const user = await userService.getUserById(Number(id)); // id를 숫자로 변환
+			res.status(200).json(user);
+		} catch (err) {
+			res.status(404).json({ error: err.message });
+		}
+	},
 };

@@ -22,12 +22,17 @@ model User {
   department    String   @db.VarChar(15)
   gender        String   @db.VarChar(15)
   studentId     String   @db.VarChar(15)
+  lifestyle     String   @db.VarChar(15)
   birth         DateTime @db.Date
-  isSmoking     Boolean  @map("is_smoking") @db.Boolean
+  isSmoking     Boolean  @map("is_smoking") 
   imageUrl      String?  @map("image_url") @db.VarChar(255)
   wakeUpTime    DateTime @map("wake_up_time") @db.Time
+  sleepingTime  DateTime @map("sleeping_time") @db.Time
+  lightOutTime  DateTime @map("light_out_time") @db.Time
+  showerTime    DateTime @map("shower_time") @db.Time
   sleepingHabits SleepingHabit[]
   acLevel       String  @map("ac_level") @db.VarChar(15)
+  posts    Post[]
 
   @@map("user")
 }
@@ -39,4 +44,13 @@ model SleepingHabit {
   user       User   @relation(fields: [userId], references: [id])
 
   @@map("sleeping_habit")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  content   String
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
 }

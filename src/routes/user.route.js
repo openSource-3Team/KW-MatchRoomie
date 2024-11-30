@@ -8,4 +8,4 @@ router.post("/login", userController.login);
 router.post("/reset-password", userController.resetPassword);
 router.put("/:id/profile", userController.updateProfile);
 
-export default router;
+export const userRouter = router;

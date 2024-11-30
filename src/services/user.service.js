@@ -1,4 +1,4 @@
-import { userRepository } from "../repositories/user.repository.js";
+import { userRepository } from "../repository/user.repository.js";
 
 export const userService = {
 	registerUser: async (email, password) => {
@@ -45,5 +45,46 @@ export const userService = {
 			phoneNumber: updatedUser.phoneNumber,
 			imageUrl: updatedUser.imageUrl,
 		};
+	},
+
+	getUserById: async (id) => {
+		const user = await userRepository.findById(id);
+		if (!user) throw new Error("User not found");
+		return {
+			id: user.id,
+			email: user.email,
+			name: user.name,
+			dormitory: user.dormitory,
+			department: user.department,
+			gender: user.gender,
+			studentId: user.studentId,
+			wakeUpTime: user.wakeUpTime,
+			sleepingTime: user.sleepingTime,
+			lightOutTime: user.lightOutTime,
+			showerTime: user.showerTime,
+			isSmoking: user.isSmoking,
+			imageUrl: user.imageUrl,
+			sleepingHabits: user.sleepingHabits.map((habit) => habit.habit),
+		};
+	},
+
+	filterUsers: async (filters) => {
+		const users = await userRepository.filterUsers(filters);
+		return users.map((user) => ({
+			id: user.id,
+			email: user.email,
+			name: user.name,
+			dormitory: user.dormitory,
+			department: user.department,
+			gender: user.gender,
+			studentId: user.studentId,
+			wakeUpTime: user.wakeUpTime,
+			sleepingTime: user.sleepingTime,
+			lightOutTime: user.lightOutTime,
+			showerTime: user.showerTime,
+			isSmoking: user.isSmoking,
+			imageUrl: user.imageUrl,
+			sleepingHabits: user.sleepingHabits.map((habit) => habit.habit),
+		}));
 	},
 };
