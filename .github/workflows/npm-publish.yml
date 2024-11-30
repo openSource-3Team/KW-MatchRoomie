@@ -31,30 +31,6 @@ jobs:
         cat .env    # 내용 확인
       shell: bash
 
-    # db.config.js 파일 생성
-    - name: Create db.config.js file
-      run: |
-        mkdir -p config
-        echo "import mysql from 'mysql2/promise';" > config/db.config.js
-        echo "import dotenv from 'dotenv';" >> config/db.config.js
-        echo "import { PrismaClient } from '@prisma/client';" >> config/db.config.js
-        echo "" >> config/db.config.js
-        echo "export const prisma = new PrismaClient();" >> config/db.config.js
-        echo "" >> config/db.config.js
-        echo "dotenv.config();" >> config/db.config.js
-        echo "" >> config/db.config.js
-        echo "export const pool = mysql.createPool({" >> config/db.config.js
-        echo "  host: '${DB_HOST}'," >> config/db.config.js
-        echo "  user: '${DB_USER}'," >> config/db.config.js
-        echo "  port: ${DB_PORT}," >> config/db.config.js
-        echo "  database: '${DB_TABLE}'," >> config/db.config.js
-        echo "  password: '${DB_PASSWORD}'," >> config/db.config.js
-        echo "  waitForConnections: true," >> config/db.config.js
-        echo "  connectionLimit: 10," >> config/db.config.js
-        echo "  queueLimit: 0," >> config/db.config.js
-        echo "});" >> config/db.config.js
-      shell: bash
-
     # 원격 서버의 .env 초기화
     - name: Initialize remote .env path
       uses: appleboy/ssh-action@v0.1.6
