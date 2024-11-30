@@ -1,5 +1,5 @@
 # 베이스 이미지를 설정 (Node.js LTS 버전 권장)
-FROM node:18
+FROM node:20
 
 # 작업 디렉토리 설정
 WORKDIR /usr/src/app
