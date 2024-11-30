@@ -1,4 +1,5 @@
 import { postService } from "../services/post.service.js";
+import { response } from "../../config/response.js";
 
 export const postController = {
 	createPost: async (req, res) => {
