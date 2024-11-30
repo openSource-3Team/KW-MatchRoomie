@@ -1,85 +1,59 @@
-name: Node.js CI with Docker Deploy # 워크플로 이름
+name: CI/CD for Node.js with Prisma and MySQL
 
 on:
   push:
-    branches: [ "main" ] # main 브랜치에 push될 때 실행
-
-permissions:
-  contents: read
+    branches:
+      - main  # main 브랜치에 push할 때 실행
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    # 코드 체크아웃
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    # Node.js 설정
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20' # 사용할 Node.js 버전
+        node-version: 20
 
-    # .env 파일 생성
-    - name: Create .env file
-      run: |
-        echo "${{ secrets.ENV }}" > ./.env
-        ls -la .env # 파일 생성 확인
-        cat .env    # 내용 확인
-      shell: bash
+    - name: Install dependencies
+      run: npm ci
 
-    # 원격 서버의 .env 경로 초기화
-    - name: Initialize remote .env path
-      uses: appleboy/ssh-action@v0.1.6
+    - name: Prisma validate
+      run: npx prisma validate
+
+    - name: Run tests
+      run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
       with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.KEY }}
-        port: 22
-        script: |
-          if [ -d "/home/ubuntu/.env" ]; then
-            sudo rm -rf /home/ubuntu/.env # 디렉토리 삭제
-          elif [ -f "/home/ubuntu/.env" ]; then
-            sudo rm /home/ubuntu/.env    # 기존 파일 삭제
-          fi
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # .env 파일 원격 서버로 전송
-    - name: Transfer .env to remote server
-      uses: appleboy/scp-action@v0.1.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.KEY }}
-        source: ".env"
-        target: "/home/ubuntu/.env"
-        overwrite: true # 기존 파일 덮어쓰기
-
-    # Node.js 프로젝트 의존성 설치 및 빌드
-    - name: Install dependencies and build
-      run: |
-        npm install
-        npm run build # 빌드 스크립트가 없으면 생략 가능
-
-    # 도커 이미지 빌드 및 Docker Hub에 푸시
     - name: Build and push Docker image
       run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t ${{ secrets.DOCKER_REPO }} .
-        docker push ${{ secrets.DOCKER_REPO }}
+        docker build -t hig26827463/opensource:latest .
+        docker push hig26827463/opensource:latest
 
-    # 원격 서버에 접속 후 도커 이미지 Pull 및 실행
-    - name: Deploy to remote server
+    - name: Deploy using docker-compose
       uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
-        username: ubuntu
+        username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.KEY }}
-        port: 22
         script: |
-          cd /
-          sudo docker stop node-app || true # 기존 컨테이너 중지
-          sudo docker rm node-app || true  # 기존 컨테이너 삭제
-          sudo docker pull ${{ secrets.DOCKER_REPO }}
-          sudo docker run -d -p 3000:3000 --name node-app --env-file /home/ubuntu/.env ${{ secrets.DOCKER_REPO }}
+          cd /path/to/project
+          docker-compose pull
+          docker-compose down
+          docker-compose up -d
