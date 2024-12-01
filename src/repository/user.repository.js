@@ -5,13 +5,13 @@ export const userRepository = {
 		// 선택적 필드에 null을 설정하거나 아예 삭제
 		const userData = {
 			...data,
-			birth: data.birth || null, // birth가 없으면 null로 처리
+			birth: data.birth || "2000-01-01T00:00:00Z", // birth가 없으면 null로 처리
 			isSmoking: data.isSmoking || null,
 			imageUrl: data.imageUrl || null,
-			wakeUpTime: data.wakeUpTime || null,
-			sleepingTime: data.sleepingTime || null,
-			lightOutTime: data.lightOutTime || null,
-			showerTime: data.showerTime || null,
+			wakeUpTime: data.wakeUpTime || "2000-01-01T00:00:00Z",
+			sleepingTime: data.sleepingTime || "2000-01-01T00:00:00Z",
+			lightOutTime: data.lightOutTime || "2000-01-01T00:00:00Z",
+			showerTime: data.showerTime || "2000-01-01T00:00:00Z",
 			acLevel: data.acLevel || null,
 		};
 
