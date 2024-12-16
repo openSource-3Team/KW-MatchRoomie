@@ -23,7 +23,7 @@ const router = express.Router();
  *                 type: string
  *                 example: Password123!
  *     responses:
- *       201:
+ *       200:
  *         description: 사용자 등록 성공
  *         content:
  *           application/json:
@@ -375,7 +375,7 @@ router.post("/filter", userController.filterUsers);
 
 /**
  * @swagger
- * /messages/send:
+ * /users/send:
  *   post:
  *     summary: 쪽지 전송
  *     description: 사용자 간 쪽지를 전송합니다.
@@ -393,7 +393,7 @@ router.post("/filter", userController.filterUsers);
  *               content:
  *                 type: string
  *     responses:
- *       201:
+ *       200:
  *         description: 전송 성공
  *       400:
  *         description: 잘못된 요청
@@ -402,7 +402,7 @@ router.post("/send", userController.sendMessage);
 
 /**
  * @swagger
- * /messages/sent/{userId}:
+ * /users/received/{userId}:
  *   get:
  *     summary: 수신 쪽지 조회
  *     description: 사용자가 받은은 쪽지를 조회합니다.
@@ -418,11 +418,11 @@ router.post("/send", userController.sendMessage);
  *       400:
  *         description: 잘못된 요청
  */
-router.get("/sent/:userId", userController.getReceivedMessages);
+router.get("/recieved/:userId", userController.getReceivedMessages);
 
 /**
  * @swagger
- * /messages/sent/{userId}:
+ * /users/sent/{userId}:
  *   get:
  *     summary: 발신 쪽지 조회
  *     description: 사용자가 보낸 쪽지를 조회합니다.
