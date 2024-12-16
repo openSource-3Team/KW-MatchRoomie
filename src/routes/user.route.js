@@ -196,7 +196,7 @@ router.get("/:id", userController.getUserById);
  * @swagger
  * /users/filter:
  *   post:
- *     summary: 사용자 필터링
+ *     summary: 사용자 필터링 whghl
  *     description: 필터 조건에 맞는 사용자 목록을 반환합니다.
  *     requestBody:
  *       required: true
