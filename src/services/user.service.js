@@ -192,42 +192,14 @@ export const userService = {
 			throw new Error("Sender, receiver, and content are required");
 		}
 
-		const message = await prisma.message.create({
-			data: {
-				senderId,
-				receiverId,
-				content,
-			},
-		});
-
-		return message;
+		return await messageRepository.create({ senderId, receiverId, content });
 	},
 
 	getSentMessages: async (userId) => {
-		const messages = await prisma.message.findMany({
-			where: { senderId: userId },
-			include: {
-				receiver: {
-					select: { id: true, name: true },
-				},
-			},
-			orderBy: { createdAt: "desc" },
-		});
-
-		return messages;
+		return await messageRepository.getSentMessages(userId);
 	},
 
 	getReceivedMessages: async (userId) => {
-		const messages = await prisma.message.findMany({
-			where: { receiverId: userId },
-			include: {
-				sender: {
-					select: { id: true, name: true },
-				},
-			},
-			orderBy: { createdAt: "desc" },
-		});
-
-		return messages;
+		return await messageRepository.getReceivedMessages(userId);
 	},
 };
