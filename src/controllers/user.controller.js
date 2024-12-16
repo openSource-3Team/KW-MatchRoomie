@@ -62,4 +62,34 @@ export const userController = {
 			res.status(400).send(response(400, { error: err.message }));
 		}
 	},
+
+	sendMessage: async (req, res) => {
+		try {
+			const { senderId, receiverId, content } = req.body;
+			const result = await userService.sendMessage(senderId, receiverId, content);
+			res.status(201).send(response(201, result));
+		} catch (err) {
+			res.status(400).send(response(400, { error: err.message }));
+		}
+	},
+
+	getSentMessages: async (req, res) => {
+		try {
+			const { userId } = req.params;
+			const result = await userService.getSentMessages(Number(userId));
+			res.status(200).send(response(200, result));
+		} catch (err) {
+			res.status(400).send(response(400, { error: err.message }));
+		}
+	},
+
+	getReceivedMessages: async (req, res) => {
+		try {
+			const { userId } = req.params;
+			const result = await userService.getReceivedMessages(Number(userId));
+			res.status(200).send(response(200, result));
+		} catch (err) {
+			res.status(400).send(response(400, { error: err.message }));
+		}
+	},
 };
