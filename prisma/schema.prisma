@@ -15,28 +15,37 @@ datasource db {
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  email          String?  @unique(map: "email") @db.VarChar(255) // 선택적
-  password       String?  @db.VarChar(255)                      // 선택적
-  name           String?  @db.VarChar(100)                      // 선택적
-  dormitory      String?  @db.VarChar(15)                       // 선택적
-  department     String?  @db.VarChar(15)                       // 선택적
-  gender         String?  @db.VarChar(15)                       // 선택적
-  studentId      String?  @db.VarChar(15)                       // 선택적
-  lifestyle      String?  @db.VarChar(15)                       // 선택적
-  birth          DateTime? @db.Date                             // 선택적
-  isSmoking      Boolean?  @map("is_smoking")                   // 선택적
-  imageUrl       String?  @map("image_url") @db.VarChar(255)    // 선택적
-  wakeUpTime     DateTime? @map("wake_up_time") @db.Time        // 선택적
-  sleepingTime   DateTime? @map("sleeping_time") @db.Time       // 선택적
-  lightOutTime   DateTime? @map("light_out_time") @db.Time      // 선택적
-  showerTime     DateTime? @map("shower_time") @db.Time         // 선택적
-  sleepingHabits SleepingHabit[]                               // 관계는 유지
-  acLevel        String?  @map("ac_level") @db.VarChar(15)      // 선택적
-  posts          Post[]                                       // 관계는 유지
+  id                    Int      @id @default(autoincrement())
+  email                 String?  @unique(map: "email") @db.VarChar(255)
+  password              String?  @db.VarChar(255)
+  name                  String?  @db.VarChar(100)
+  dormitory             String?  @db.VarChar(15)
+  dormitoryDuration     String?  @db.VarChar(15)                // 기숙사 생활 기간
+  department            String?  @db.VarChar(50)
+  gender                String?  @db.VarChar(15)
+  studentId             String?  @map("student_id") @db.VarChar(15)
+  lifestyle             String?  @db.VarChar(15)
+  birth                 DateTime? @db.Date
+  isSmoking             Boolean?  @map("is_smoking")
+  imageUrl              String?  @map("image_url") @db.VarChar(255)
+  wakeUpTime            String?   @map("wake_up_time") @db.VarChar(10)
+  sleepingTime          String?   @map("sleeping_time") @db.VarChar(10)
+  lightOutTime          String?   @map("light_out_time") @db.VarChar(10)
+  showerTime            String?   @map("shower_time") @db.VarChar(15)
+  cleaningFrequency     String?   @db.VarChar(15)               // 청소 주기
+  itemSharingPreference String?   @db.VarChar(15)               // 물건 공유 여부
+  gamePreference        String?   @db.VarChar(50)               // 방에서 게임
+  studyPreference       String?   @db.VarChar(50)               // 방 안 공부
+  foodPreference        String?   @db.VarChar(50)               // 방 안 음식물 섭취
+  acLevel               String?   @map("ac_level") @db.VarChar(15)
+  mbti                  String?   @db.VarChar(4)                // MBTI 추가
+  selectedFilters       String?   @map("selected_filters") @db.Text
+  sleepingHabits        SleepingHabit[]                         // 잠버릇 관계
+  posts                 Post[]                                  // 관계는 유지
 
   @@map("user")
 }
+
 
 model SleepingHabit {
   id         Int    @id @default(autoincrement())         // 선택적
