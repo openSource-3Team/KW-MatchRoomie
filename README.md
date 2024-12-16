@@ -48,11 +48,11 @@
 ### **2. 개발 도구 및 환경**
 - Git & GitHub: 버전 관리 및 협업 툴
 - IntelliJ / VSCode: 통합 개발 환경(IDE, 서버/프론트)
-- postman: API 테스트 및 디버깅
+- Swagger: API 테스트 및 디버깅
 - Docker: 컨테이너 기반 배포 환경 구축(미확정)
 ### **3. 디자인 및 UI/UX 툴**
 - Figma: 프로토타입 설계 및 UI 디자인
 ### **4. 배포 및 운영**
 - AWS EC2: 서버 호스팅 및 배포
 - AWS RDS: 데이터베이스 호스팅
-- CI/CD(깃허브 액션 & Docker): 자동 배포 파이프라인 구축 (미확정)
+- CI/CD(깃허브 액션 & Docker): 자동 배포 파이프라인 구축
