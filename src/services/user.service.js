@@ -1,4 +1,5 @@
 import { userRepository } from "../repository/user.repository.js";
+import { messageRepository } from "../repository/message.repository.js";
 
 export const userService = {
 	registerUser: async (email, password) => {
