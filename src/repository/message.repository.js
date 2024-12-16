@@ -1,6 +1,6 @@
 import { prisma } from "../../config/db.config.js";
 
-export const messageService = {
+export const messageRepository = {
 	create: async ({ senderId, receiverId, content }) => {
 		return await prisma.message.create({
 			data: { senderId, receiverId, content },
