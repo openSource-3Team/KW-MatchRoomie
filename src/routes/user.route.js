@@ -398,7 +398,7 @@ router.post("/filter", userController.filterUsers);
  *       400:
  *         description: 잘못된 요청
  */
-router.post("/send", messageController.sendMessage);
+router.post("/send", userController.sendMessage);
 
 /**
  * @swagger
@@ -418,7 +418,7 @@ router.post("/send", messageController.sendMessage);
  *       400:
  *         description: 잘못된 요청
  */
-router.get("/sent/:userId", messageController.getSentMessages);
+router.get("/sent/:userId", userController.getSentMessages);
 
 /**
  * @swagger
@@ -438,6 +438,6 @@ router.get("/sent/:userId", messageController.getSentMessages);
  *       400:
  *         description: 잘못된 요청
  */
-router.get("/sent/:userId", messageController.getSentMessages);
+router.get("/sent/:userId", userController.getSentMessages);
 
 export const userRouter = router;
