@@ -42,6 +42,8 @@ model User {
   selectedFilters       String?   @map("selected_filters") @db.Text
   sleepingHabits        SleepingHabit[]                         // 잠버릇 관계
   posts                 Post[]                                  // 관계는 유지
+  sentMessages      Message[] @relation("SentMessages")
+  receivedMessages  Message[] @relation("ReceivedMessages")
 
   @@map("user")
 }
@@ -63,4 +65,16 @@ model Post {
   authorId  Int?                                          // 선택적
   author    User?     @relation(fields: [authorId], references: [id]) // 선택적 관계
   createdAt DateTime? @default(now())                     // 선택적
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  senderId   Int      // 메시지 발신자
+  receiverId Int      // 메시지 수신자
+  content    String   @db.Text // 메시지 내용
+  createdAt  DateTime @default(now()) // 메시지 생성 시간
+
+  // 관계 설정
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }

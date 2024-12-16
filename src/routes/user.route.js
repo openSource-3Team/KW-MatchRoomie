@@ -196,7 +196,7 @@ router.get("/:id", userController.getUserById);
  * @swagger
  * /users/filter:
  *   post:
- *     summary: 필터링 된 사용자 조회
+ *     summary: 사용자 필터링 조회회
  *     description: 필터 조건에 맞는 사용자 목록을 반환합니다.
  *     requestBody:
  *       required: true
@@ -372,5 +372,72 @@ router.get("/:id", userController.getUserById);
  *         description: 잘못된 요청
  */
 router.post("/filter", userController.filterUsers);
+
+/**
+ * @swagger
+ * /messages/send:
+ *   post:
+ *     summary: 쪽지 전송
+ *     description: 사용자 간 쪽지를 전송합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               senderId:
+ *                 type: integer
+ *               receiverId:
+ *                 type: integer
+ *               content:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: 전송 성공
+ *       400:
+ *         description: 잘못된 요청
+ */
+router.post("/send", messageController.sendMessage);
+
+/**
+ * @swagger
+ * /messages/sent/{userId}:
+ *   get:
+ *     summary: 발신 쪽지 조회
+ *     description: 사용자가 보낸 쪽지를 조회합니다.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 조회 성공
+ *       400:
+ *         description: 잘못된 요청
+ */
+router.get("/sent/:userId", messageController.getSentMessages);
+
+/**
+ * @swagger
+ * /messages/sent/{userId}:
+ *   get:
+ *     summary: 발신 쪽지 조회
+ *     description: 사용자가 보낸 쪽지를 조회합니다.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 조회 성공
+ *       400:
+ *         description: 잘못된 요청
+ */
+router.get("/sent/:userId", messageController.getSentMessages);
 
 export const userRouter = router;
