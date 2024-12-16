@@ -404,8 +404,8 @@ router.post("/send", userController.sendMessage);
  * @swagger
  * /messages/sent/{userId}:
  *   get:
- *     summary: 발신 쪽지 조회
- *     description: 사용자가 보낸 쪽지를 조회합니다.
+ *     summary: 수신 쪽지 조회
+ *     description: 사용자가 받은은 쪽지를 조회합니다.
  *     parameters:
  *       - in: path
  *         name: userId
@@ -418,7 +418,7 @@ router.post("/send", userController.sendMessage);
  *       400:
  *         description: 잘못된 요청
  */
-router.get("/sent/:userId", userController.getSentMessages);
+router.get("/sent/:userId", userController.getReceivedMessages);
 
 /**
  * @swagger
