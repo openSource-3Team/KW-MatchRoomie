@@ -186,4 +186,48 @@ export const userService = {
 
 		return users;
 	},
+
+	sendMessage: async (senderId, receiverId, content) => {
+		if (!senderId || !receiverId || !content) {
+			throw new Error("Sender, receiver, and content are required");
+		}
+
+		const message = await prisma.message.create({
+			data: {
+				senderId,
+				receiverId,
+				content,
+			},
+		});
+
+		return message;
+	},
+
+	getSentMessages: async (userId) => {
+		const messages = await prisma.message.findMany({
+			where: { senderId: userId },
+			include: {
+				receiver: {
+					select: { id: true, name: true },
+				},
+			},
+			orderBy: { createdAt: "desc" },
+		});
+
+		return messages;
+	},
+
+	getReceivedMessages: async (userId) => {
+		const messages = await prisma.message.findMany({
+			where: { receiverId: userId },
+			include: {
+				sender: {
+					select: { id: true, name: true },
+				},
+			},
+			orderBy: { createdAt: "desc" },
+		});
+
+		return messages;
+	},
 };
