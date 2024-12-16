@@ -206,8 +206,10 @@ router.get("/:id", userController.getUserById);
  *             type: object
  *             properties:
  *               dormitoryDuration:
- *                 type: string
- *                 example: 6개월
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: [ "6개월", "12개월" ]
  *               department:
  *                 type: array
  *                 items:
@@ -218,19 +220,6 @@ router.get("/:id", userController.getUserById);
  *                 items:
  *                   type: string
  *                 example: [ "21학번", "22학번" ]
- *               isSmoking:
- *                 type: boolean
- *                 example: false
- *               cleaningFrequency:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "매일", "2~3일에 한 번" ]
- *               lifestyle:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "아침형" ]
  *               wakeUpTime:
  *                 type: array
  *                 items:
@@ -251,6 +240,16 @@ router.get("/:id", userController.getUserById);
  *                 items:
  *                   type: string
  *                 example: [ "외출 전", "귀가 후" ]
+ *               isSmoking:
+ *                 type: array
+ *                 items:
+ *                   type: boolean
+ *                 example: [ false ]
+ *               cleaningFrequency:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: [ "매일", "2~3일에 한 번" ]
  *               itemSharingPreference:
  *                 type: array
  *                 items:
@@ -271,6 +270,21 @@ router.get("/:id", userController.getUserById);
  *                 items:
  *                   type: string
  *                 example: [ "음료", "간단한 간식", "배달음식" ]
+ *               lifestyle:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: [ "아침형", "저녁형" ]
+ *               sleepingHabits:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: [ "코골이", "잠꼬대" ]
+ *               acLevel:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: [ "민감", "둔감" ]
  *               mbti:
  *                 type: array
  *                 items:
@@ -304,12 +318,9 @@ router.get("/:id", userController.getUserById);
  *                   department:
  *                     type: string
  *                     example: Computer Science
- *                   lifestyle:
+ *                   studentId:
  *                     type: string
- *                     example: 아침형
- *                   isSmoking:
- *                     type: boolean
- *                     example: false
+ *                     example: 21학번
  *                   wakeUpTime:
  *                     type: string
  *                     example: 07:00
@@ -322,6 +333,12 @@ router.get("/:id", userController.getUserById);
  *                   showerTime:
  *                     type: string
  *                     example: 외출 전
+ *                   isSmoking:
+ *                     type: boolean
+ *                     example: false
+ *                   cleaningFrequency:
+ *                     type: string
+ *                     example: 매일
  *                   itemSharingPreference:
  *                     type: string
  *                     example: 공유해요
@@ -334,9 +351,23 @@ router.get("/:id", userController.getUserById);
  *                   foodPreference:
  *                     type: string
  *                     example: 배달음식
+ *                   lifestyle:
+ *                     type: string
+ *                     example: 아침형
+ *                   sleepingHabits:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                     example: [ "코골이", "잠꼬대" ]
+ *                   acLevel:
+ *                     type: string
+ *                     example: 민감
  *                   mbti:
  *                     type: string
  *                     example: INFJ
+ *                   imageUrl:
+ *                     type: string
+ *                     example: https://example.com/profile.jpg
  *       400:
  *         description: 잘못된 요청
  */
