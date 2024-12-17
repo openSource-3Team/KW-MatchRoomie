@@ -55,10 +55,6 @@ export const userService = {
 			cleaningFrequency: profileData.cleaningFrequency || null,
 			itemSharingPreference: profileData.itemSharingPreference || null,
 			acLevel: profileData.acLevel || null,
-			selectedFilters: profileData.selectedFilters
-				? JSON.stringify(profileData.selectedFilters)
-				: null,
-			// 다대다 관계 필드 처리
 			gamePreferences: Array.isArray(profileData.gamePreferences)
 				? { set: profileData.gamePreferences.map((name) => ({ name })) }
 				: { set: [] },
@@ -109,7 +105,6 @@ export const userService = {
 			studyPreferences: updatedUser.studyPreferences.map((s) => s.name),
 			foodPreferences: updatedUser.foodPreferences.map((f) => f.name),
 			sleepingHabits: updatedUser.sleepingHabits.map((h) => h.name),
-			selectedFilters: updatedUser.selectedFilters ? JSON.parse(updatedUser.selectedFilters) : [],
 		};
 	},
 
