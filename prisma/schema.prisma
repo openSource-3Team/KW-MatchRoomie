@@ -36,10 +36,10 @@ model User {
   showerTime            String?   @map("shower_time") @db.VarChar(15)
   cleaningFrequency     String?   @db.VarChar(15)
   itemSharingPreference String?   @db.VarChar(15)
-  gamePreference        String[]  @db.Text // 다중 선택 가능
-  studyPreference       String[]  @db.Text // 다중 선택 가능
-  foodPreference        String[]  @db.Text // 다중 선택 가능
-  sleepingHabits        String[]  @db.Text // 다중 선택 가능
+  gamePreferences       GamePreference[] // 다대다 관계
+  studyPreferences      StudyPreference[] 
+  foodPreferences       FoodPreference[]
+  sleepingHabits        SleepingHabit[]
   acLevel               String?   @map("ac_level") @db.VarChar(15)
   mbti                  String?   @db.VarChar(4)
   selectedFilters       String?   @map("selected_filters") @db.Text
@@ -49,7 +49,23 @@ model User {
   comments              Comment[]
   @@map("user")
 }
+model GamePreference {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(50) // 게임 이름
+  users User[] @relation("UserToGame")
+}
 
+model StudyPreference {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(50)
+  users User[] @relation("UserToStudy")
+}
+
+model FoodPreference {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(50)
+  users User[] @relation("UserToFood")
+}
 
 model SleepingHabit {
   id         Int    @id @default(autoincrement())         // 선택적
