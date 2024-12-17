@@ -529,10 +529,92 @@ router.get("/received/:userId", userController.getReceivedMessages);
  */
 router.get("/sent/:userId", userController.getSentMessages);
 
-// 비밀번호 재설정 요청 (이메일로 인증 코드 전송)
+/**
+ * @swagger
+ * /password-reset:
+ *   post:
+ *     summary: 비밀번호 재설정 요청
+ *     description: 가입된 이메일로 비밀번호 재설정을 위한 인증 코드를 전송합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: example@gmail.com
+ *     responses:
+ *       200:
+ *         description: 인증 코드 전송 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "이메일로 인증 코드를 전송했습니다."
+ *       400:
+ *         description: 잘못된 요청 또는 등록되지 않은 이메일
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "등록된 이메일이 아닙니다."
+ */
 router.post("/password-reset", userController.requestPasswordReset);
 
-// 인증 코드 검증 및 비밀번호 변경
+/**
+ * @swagger
+ * /password-reset/verify:
+ *   post:
+ *     summary: 비밀번호 재설정
+ *     description: 인증 코드 검증 후 새로운 비밀번호로 변경합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: example@gmail.com
+ *               code:
+ *                 type: string
+ *                 example: "123456"
+ *               newPassword:
+ *                 type: string
+ *                 example: "newPassword123!"
+ *     responses:
+ *       200:
+ *         description: 비밀번호 재설정 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "비밀번호가 성공적으로 변경되었습니다."
+ *       400:
+ *         description: 잘못된 인증 코드 또는 유효하지 않은 요청
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "유효하지 않은 인증 코드입니다."
+ */
 router.post("/password-reset/verify", userController.verifyCodeAndResetPassword);
 
 export const userRouter = router;
