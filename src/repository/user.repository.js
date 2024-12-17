@@ -4,10 +4,8 @@ export const userRepository = {
 	createUser: (data) => {
 		// 선택적 필드에 null을 설정하거나 아예 삭제
 		const userData = {
-			...data,
 			birth: data.birth || "2000-01-01T00:00:00Z", // birth가 없으면 null로 처리
 			isSmoking: data.isSmoking || null,
-			imageUrl: data.imageUrl || null,
 			wakeUpTime: data.wakeUpTime || "2000-01-01T00:00:00Z",
 			sleepingTime: data.sleepingTime || "2000-01-01T00:00:00Z",
 			lightOutTime: data.lightOutTime || "2000-01-01T00:00:00Z",
