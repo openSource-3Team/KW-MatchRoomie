@@ -98,18 +98,77 @@ router.post("/reset-password", userController.resetPassword);
  *               name:
  *                 type: string
  *                 example: John Doe
- *               dormitory:
+ *               email:
  *                 type: string
- *                 example: A-Block
- *               department:
- *                 type: string
- *                 example: Computer Science
- *               phoneNumber:
- *                 type: string
- *                 example: 010-1234-5678
+ *                 example: john.doe@example.com
  *               imageUrl:
  *                 type: string
  *                 example: https://example.com/profile.jpg
+ *               gender:
+ *                 type: string
+ *                 example: 남성
+ *               birth:
+ *                 type: string
+ *                 format: date
+ *                 example: 1995-08-15
+ *               dormitory:
+ *                 type: string
+ *                 example: A-Block
+ *               phoneNumber:
+ *                 type: string
+ *                 example: 010-1234-5678
+ *               alarm:
+ *                 type: string
+ *                 example: 민감
+ *               dormitoryDuration:
+ *                 type: string
+ *                 example: 6개월
+ *               department:
+ *                 type: string
+ *                 example: Computer Science
+ *               studentId:
+ *                 type: string
+ *                 example: 21학번
+ *               lifestyle:
+ *                 type: string
+ *                 example: 아침형
+ *               isSmoking:
+ *                 type: boolean
+ *                 example: false
+ *               wakeUpTime:
+ *                 type: string
+ *                 example: 07:00
+ *               sleepingTime:
+ *                 type: string
+ *                 example: 22:00
+ *               lightOutTime:
+ *                 type: string
+ *                 example: 23:00
+ *               showerTime:
+ *                 type: string
+ *                 example: 외출 전
+ *               cleaningFrequency:
+ *                 type: string
+ *                 example: 매일
+ *               itemSharingPreference:
+ *                 type: string
+ *                 example: 공유해요
+ *               gamePreference:
+ *                 type: string
+ *                 example: PC 게임
+ *               studyPreference:
+ *                 type: string
+ *                 example: 불 켜고 해도 돼요
+ *               foodPreference:
+ *                 type: string
+ *                 example: 간단한 간식
+ *               acLevel:
+ *                 type: string
+ *                 example: 둔감
+ *               selectedFilters:
+ *                 type: object
+ *                 additionalProperties: true
+ *                 example: { "sleepingHabits": ["코골이", "잠꼬대"], "preferences": ["청소 주기", "공유해요"] }
  *     responses:
  *       200:
  *         description: 프로필 업데이트 성공
@@ -130,15 +189,58 @@ router.post("/reset-password", userController.resetPassword);
  *                 dormitory:
  *                   type: string
  *                   example: A-Block
- *                 department:
- *                   type: string
- *                   example: Computer Science
  *                 phoneNumber:
  *                   type: string
  *                   example: 010-1234-5678
  *                 imageUrl:
  *                   type: string
  *                   example: https://example.com/profile.jpg
+ *                 gender:
+ *                   type: string
+ *                   example: 남성
+ *                 birth:
+ *                   type: string
+ *                   example: 1995-08-15
+ *                 department:
+ *                   type: string
+ *                   example: Computer Science
+ *                 dormitoryDuration:
+ *                   type: string
+ *                   example: 6개월
+ *                 wakeUpTime:
+ *                   type: string
+ *                   example: 07:00
+ *                 sleepingTime:
+ *                   type: string
+ *                   example: 22:00
+ *                 lightOutTime:
+ *                   type: string
+ *                   example: 23:00
+ *                 showerTime:
+ *                   type: string
+ *                   example: 외출 전
+ *                 cleaningFrequency:
+ *                   type: string
+ *                   example: 매일
+ *                 itemSharingPreference:
+ *                   type: string
+ *                   example: 공유해요
+ *                 gamePreference:
+ *                   type: string
+ *                   example: PC 게임
+ *                 studyPreference:
+ *                   type: string
+ *                   example: 불 켜고 해도 돼요
+ *                 foodPreference:
+ *                   type: string
+ *                   example: 간단한 간식
+ *                 acLevel:
+ *                   type: string
+ *                   example: 둔감
+ *                 selectedFilters:
+ *                   type: object
+ *                   additionalProperties: true
+ *                   example: { "sleepingHabits": ["코골이", "잠꼬대"], "preferences": ["청소 주기", "공유해요"] }
  *       400:
  *         description: 잘못된 요청
  *       404:
