@@ -69,7 +69,6 @@ export const userService = {
 	updateProfile: async (id, profileData) => {
 		const dataToUpdate = {
 			name: profileData.name || null,
-			email: profileData.email || null,
 			imageData: profileData.imageData || null,
 			gender: profileData.gender || null,
 			phoneNumber: profileData.phoneNumber || null,
