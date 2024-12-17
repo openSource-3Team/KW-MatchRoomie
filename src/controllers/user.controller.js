@@ -96,8 +96,7 @@ export const userController = {
 			const users = await userService.filterUsers(filterData);
 
 			return res.status(200).json(users);
-		} catch (error) {
-			console.error("Error filtering users:", error);
+		} catch (err) {
 			res.status(400).send(response(400, { error: err.message }));
 		}
 	},
