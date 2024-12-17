@@ -1,6 +1,7 @@
 import express from "express";
 import { tempRouter } from "./src/routes/temp.route.js";
 import { userRouter } from "./src/routes/user.route.js";
+import { commentRouter } from "./src/routes/comment.route.js";
 //import { sleepingHabitRouter } from "./src/routes/sleepingHabbit.route.js";
 import { postRouter } from "./src/routes/post.route.js";
 import { response } from "./config/response";
@@ -22,6 +23,7 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // router setting
 app.use("/temp", tempRouter);
+app.use("comments", commentRouter);
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 //app.use("/habits", sleepingHabitRouter);
