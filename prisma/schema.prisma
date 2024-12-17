@@ -36,10 +36,10 @@ model User {
   showerTime            String?   @map("shower_time") @db.VarChar(15)
   cleaningFrequency     String?   @db.VarChar(15)
   itemSharingPreference String?   @db.VarChar(15)
-  gamePreferences       GamePreference[] // 다대다 관계
-  studyPreferences      StudyPreference[] 
-  foodPreferences       FoodPreference[]
-  sleepingHabits        SleepingHabit[]
+  gamePreferences       GamePreference[] @relation("UserToGame")
+  studyPreferences      StudyPreference[] @relation("UserToStudy")
+  foodPreferences       FoodPreference[] @relation("UserToFood")
+  sleepingHabits        SleepingHabit[] @relation("UserToSleeping")
   acLevel               String?   @map("ac_level") @db.VarChar(15)
   mbti                  String?   @db.VarChar(4)
   selectedFilters       String?   @map("selected_filters") @db.Text
@@ -51,29 +51,26 @@ model User {
 }
 model GamePreference {
   id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(50) // 게임 이름
-  users User[] @relation("UserToGame")
+  name  String @db.VarChar(50)
+  users User[] @relation("UserToGame", map: "gamePreference_user_fkey")
 }
 
 model StudyPreference {
   id    Int    @id @default(autoincrement())
   name  String @db.VarChar(50)
-  users User[] @relation("UserToStudy")
+  users User[] @relation("UserToStudy", map: "studyPreference_user_fkey")
 }
 
 model FoodPreference {
   id    Int    @id @default(autoincrement())
   name  String @db.VarChar(50)
-  users User[] @relation("UserToFood")
+  users User[] @relation("UserToFood", map: "foodPreference_user_fkey")
 }
 
 model SleepingHabit {
-  id         Int    @id @default(autoincrement())         // 선택적
-  habit      String? @db.VarChar(255)                     // 선택적
-  userId     Int?    @map("user_id")                      // 선택적
-  user       User?   @relation(fields: [userId], references: [id]) // 선택적 관계
-
-  @@map("sleeping_habit")
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(50)
+  users User[] @relation("UserToSleeping", map: "sleepingHabit_user_fkey")
 }
 
 model Post {
