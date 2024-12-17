@@ -1,8 +1,25 @@
 import express from "express";
 import { userController } from "../controllers/user.controller.js";
 import multer from "multer";
+import path from "path";
 
-const upload = multer();
+// multer 설정
+const storage = multer.memoryStorage(); // 메모리에 저장
+const upload = multer({
+	storage,
+	fileFilter: (req, file, cb) => {
+		const fileTypes = /jpeg|jpg|png/; // 허용할 이미지 파일 확장자
+		const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+		const mimetype = fileTypes.test(file.mimetype);
+
+		if (extname && mimetype) {
+			return cb(null, true);
+		} else {
+			cb(new Error("이미지 파일만 업로드 가능합니다."));
+		}
+	},
+	limits: { fileSize: 5 * 1024 * 1024 }, // 5MB 제한
+});
 const router = express.Router();
 
 /**
