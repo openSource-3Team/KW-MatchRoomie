@@ -50,26 +50,26 @@ model User {
 }
 model GamePreference {
   id    Int     @id @default(autoincrement())
-  name  String  @unique @db.VarChar(50)  // UNIQUE 제약 조건 추가
-  users User[]  @relation("UserToGame", references: [id])
+  name  String  @unique @db.VarChar(50)
+  users User[]  @relation("UserToGame")  // ✅ references 제거
 }
 
 model StudyPreference {
   id    Int     @id @default(autoincrement())
   name  String  @unique @db.VarChar(50)
-  users User[]  @relation("UserToStudy", references: [id])
+  users User[]  @relation("UserToStudy") // ✅ references 제거
 }
 
 model FoodPreference {
   id    Int     @id @default(autoincrement())
   name  String  @unique @db.VarChar(50)
-  users User[]  @relation("UserToFood", references: [id])
+  users User[]  @relation("UserToFood")  // ✅ references 제거
 }
 
 model SleepingHabit {
   id    Int     @id @default(autoincrement())
   name  String  @unique @db.VarChar(50)
-  users User[]  @relation("UserToSleeping", references: [id])
+  users User[]  @relation("UserToSleeping") // ✅ references 제거
 }
 
 model Post {
