@@ -521,7 +521,7 @@ router.post("/send", userController.sendMessage);
  *       400:
  *         description: 잘못된 요청
  */
-router.get("/recieved/:userId", userController.getReceivedMessages);
+router.get("/received/:userId", userController.getReceivedMessages);
 
 /**
  * @swagger
