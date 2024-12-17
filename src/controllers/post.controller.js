@@ -48,4 +48,28 @@ export const postController = {
 			res.status(400).send(response(400, { error: err.message }));
 		}
 	},
+
+	increaseLikes: async (req, res) => {
+		try {
+			const { id } = req.params; // 게시글 ID
+			const result = await postService.increaseLikes(Number(id));
+			res
+				.status(200)
+				.send(response(200, { message: "Like added successfully", likes: result.likes }));
+		} catch (err) {
+			res.status(400).send(response(400, { error: err.message }));
+		}
+	},
+
+	decreaseLikes: async (req, res) => {
+		try {
+			const { id } = req.params; // 게시글 ID
+			const result = await postService.decreaseLikes(Number(id));
+			res
+				.status(200)
+				.send(response(200, { message: "Like added successfully", likes: result.likes }));
+		} catch (err) {
+			res.status(400).send(response(400, { error: err.message }));
+		}
+	},
 };

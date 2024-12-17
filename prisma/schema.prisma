@@ -61,15 +61,13 @@ model SleepingHabit {
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())   
-  title     String?   @db.VarChar(255)               
-  content   String?                                  
-  authorId  Int?                                    
-  author    User?     @relation(fields: [authorId], references: [id]) 
-  createdAt DateTime? @default(now())                
-
-  comments  Comment[] // 댓글 관계 설정
-  likes     Like[]    // 좋아요 관계 설정
+  id        Int      @id @default(autoincrement())        // 게시글 ID
+  title     String?   @db.VarChar(255)                    // 게시글 제목
+  content   String?                                       // 게시글 내용
+  authorId  Int?                                          // 작성자 ID
+  author    User?     @relation(fields: [authorId], references: [id]) // 작성자 관계
+  createdAt DateTime? @default(now())                     // 작성일
+  likes     Int       @default(0)                         // 좋아요 수 (기본값 0)
 }
 
 model Comment {
@@ -79,15 +77,6 @@ model Comment {
   post      Post      @relation(fields: [postId], references: [id])
   authorId  Int       // 댓글 작성자 ID
   author    User      @relation(fields: [authorId], references: [id])
-  createdAt DateTime  @default(now())
-}
-
-model Like {
-  id        Int       @id @default(autoincrement())
-  postId    Int       // 좋아요 누른 게시글
-  post      Post      @relation(fields: [postId], references: [id])
-  userId    Int       // 좋아요 누른 사용자
-  user      User      @relation(fields: [userId], references: [id])
   createdAt DateTime  @default(now())
 }
 
