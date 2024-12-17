@@ -59,26 +59,18 @@ export const userService = {
 				? JSON.stringify(profileData.selectedFilters)
 				: null,
 			// 다대다 관계 필드 처리
-			gamePreferences: profileData.gamePreferences
-				? {
-						set: profileData.gamePreferences.map((name) => ({ name })),
-				  }
-				: undefined,
-			studyPreferences: profileData.studyPreferences
-				? {
-						set: profileData.studyPreferences.map((name) => ({ name })),
-				  }
-				: undefined,
-			foodPreferences: profileData.foodPreferences
-				? {
-						set: profileData.foodPreferences.map((name) => ({ name })),
-				  }
-				: undefined,
-			sleepingHabits: profileData.sleepingHabits
-				? {
-						set: profileData.sleepingHabits.map((name) => ({ name })),
-				  }
-				: undefined,
+			gamePreferences: Array.isArray(profileData.gamePreferences)
+				? { set: profileData.gamePreferences.map((name) => ({ name })) }
+				: { set: [] }, // 배열이 아닌 경우 빈 배열 처리
+			studyPreferences: Array.isArray(profileData.studyPreferences)
+				? { set: profileData.studyPreferences.map((name) => ({ name })) }
+				: { set: [] },
+			foodPreferences: Array.isArray(profileData.foodPreferences)
+				? { set: profileData.foodPreferences.map((name) => ({ name })) }
+				: { set: [] },
+			sleepingHabits: Array.isArray(profileData.sleepingHabits)
+				? { set: profileData.sleepingHabits.map((name) => ({ name })) }
+				: { set: [] },
 		};
 
 		// Prisma 클라이언트를 사용하여 업데이트 수행

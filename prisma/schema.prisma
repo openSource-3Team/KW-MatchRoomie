@@ -42,7 +42,6 @@ model User {
   sleepingHabits        SleepingHabit[] @relation("UserToSleeping")
   acLevel               String?   @map("ac_level") @db.VarChar(15)
   mbti                  String?   @db.VarChar(4)
-  selectedFilters       String?   @map("selected_filters") @db.Text
   posts                 Post[]
   sentMessages          Message[] @relation("SentMessages")
   receivedMessages      Message[] @relation("ReceivedMessages")
