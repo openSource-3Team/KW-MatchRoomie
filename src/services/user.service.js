@@ -54,19 +54,44 @@ export const userService = {
 			showerTime: profileData.showerTime || null,
 			cleaningFrequency: profileData.cleaningFrequency || null,
 			itemSharingPreference: profileData.itemSharingPreference || null,
-			gamePreference: Array.isArray(profileData.gamePreference) ? profileData.gamePreference : [],
-			studyPreference: Array.isArray(profileData.studyPreference)
-				? profileData.studyPreference
-				: [],
-			foodPreference: Array.isArray(profileData.foodPreference) ? profileData.foodPreference : [],
-			sleepingHabits: Array.isArray(profileData.sleepingHabits) ? profileData.sleepingHabits : [],
 			acLevel: profileData.acLevel || null,
 			selectedFilters: profileData.selectedFilters
 				? JSON.stringify(profileData.selectedFilters)
 				: null,
+			// 다대다 관계 필드 처리
+			gamePreferences: profileData.gamePreferences
+				? {
+						set: profileData.gamePreferences.map((name) => ({ name })),
+				  }
+				: undefined,
+			studyPreferences: profileData.studyPreferences
+				? {
+						set: profileData.studyPreferences.map((name) => ({ name })),
+				  }
+				: undefined,
+			foodPreferences: profileData.foodPreferences
+				? {
+						set: profileData.foodPreferences.map((name) => ({ name })),
+				  }
+				: undefined,
+			sleepingHabits: profileData.sleepingHabits
+				? {
+						set: profileData.sleepingHabits.map((name) => ({ name })),
+				  }
+				: undefined,
 		};
 
-		const updatedUser = await userRepository.updateProfile(id, dataToUpdate);
+		// Prisma 클라이언트를 사용하여 업데이트 수행
+		const updatedUser = await prisma.user.update({
+			where: { id: Number(id) },
+			data: dataToUpdate,
+			include: {
+				gamePreferences: true,
+				studyPreferences: true,
+				foodPreferences: true,
+				sleepingHabits: true,
+			},
+		});
 
 		return {
 			id: updatedUser.id,
@@ -87,10 +112,10 @@ export const userService = {
 			showerTime: updatedUser.showerTime,
 			cleaningFrequency: updatedUser.cleaningFrequency,
 			itemSharingPreference: updatedUser.itemSharingPreference,
-			gamePreference: updatedUser.gamePreference,
-			studyPreference: updatedUser.studyPreference,
-			foodPreference: updatedUser.foodPreference,
-			sleepingHabits: updatedUser.sleepingHabits,
+			gamePreferences: updatedUser.gamePreferences.map((g) => g.name),
+			studyPreferences: updatedUser.studyPreferences.map((s) => s.name),
+			foodPreferences: updatedUser.foodPreferences.map((f) => f.name),
+			sleepingHabits: updatedUser.sleepingHabits.map((h) => h.name),
 			acLevel: updatedUser.acLevel,
 			selectedFilters: updatedUser.selectedFilters ? JSON.parse(updatedUser.selectedFilters) : [],
 		};

@@ -156,22 +156,22 @@ router.post("/reset-password", userController.resetPassword);
  *               itemSharingPreference:
  *                 type: string
  *                 example: 공유해요
- *               gamePreference:
+ *               gamePreferences:  # 다대다 관계에 맞게 수정
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["PC 게임해요", "모바일 게임해요"]
- *               studyPreference:
+ *               studyPreferences:  # 다대다 관계에 맞게 수정
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["불 켜고 해요", "스탠드 키고 해요"]
- *               foodPreference:
+ *               foodPreferences:  # 다대다 관계에 맞게 수정
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["간단한 간식", "식사"]
- *               sleepingHabits:
+ *               sleepingHabits:  # 다대다 관계에 맞게 수정
  *                 type: array
  *                 items:
  *                   type: string
@@ -186,10 +186,49 @@ router.post("/reset-password", userController.resetPassword);
  *     responses:
  *       200:
  *         description: 프로필 업데이트 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   example: 1
+ *                 name:
+ *                   type: string
+ *                   example: John Doe
+ *                 email:
+ *                   type: string
+ *                   example: john.doe@example.com
+ *                 imageData:
+ *                   type: string
+ *                   format: binary
+ *                   description: 프로필 이미지 데이터
+ *                 gamePreferences:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["PC 게임해요", "모바일 게임해요"]
+ *                 studyPreferences:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["불 켜고 해요"]
+ *                 foodPreferences:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["간단한 간식"]
+ *                 sleepingHabits:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["코골이"]
  *       400:
  *         description: 잘못된 요청
  */
 router.put("/:id/profile", upload.single("image"), userController.updateProfile);
+
 /**
  * @swagger
  * /users/{id}:
