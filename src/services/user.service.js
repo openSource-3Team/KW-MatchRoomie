@@ -166,8 +166,9 @@ export const userService = {
 			id: user.id,
 			email: user.email,
 			name: user.name,
-			dormitory: user.dormitory,
+			studentId: user.studentId,
 			department: user.department,
+			dormitoryDuration: user.dormitoryDuration,
 			gender: user.gender,
 			studentId: user.studentId,
 			wakeUpTime: user.wakeUpTime,
@@ -175,8 +176,15 @@ export const userService = {
 			lightOutTime: user.lightOutTime,
 			showerTime: user.showerTime,
 			isSmoking: user.isSmoking,
-			imageUrl: user.imageUrl,
-			sleepingHabits: user.sleepingHabits.map((habit) => habit.habit),
+			lifestyle: user.lifestyle,
+			alarm: user.alarm,
+			itemSharingPreference: user.itemSharingPreference,
+			gamePreference: user.gamePreferences.map((game) => game.name), // 게임 이름 리스트 반환
+			studyPreference: user.studyPreferences.map((study) => study.name), // 공부 선호 리스트 반환
+			foodPreference: user.foodPreferences.map((food) => food.name), // 음식 선호 리스트 반환
+			sleepingHabits: user.sleepingHabits.map((habit) => habit.name),
+			cleaningFrequency: user.cleaningFrequency,
+			mbti: user.mbti,
 		};
 	},
 
