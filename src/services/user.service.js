@@ -69,7 +69,7 @@ export const userService = {
 	updateProfile: async (id, profileData) => {
 		const dataToUpdate = {
 			name: profileData.name || null,
-			imageData: req.file ? req.file.buffer : null, // 파일 버퍼 처리
+			imageData: profileData.imageData || null,
 			gender: profileData.gender || null,
 			phoneNumber: profileData.phoneNumber || null,
 			alarm: profileData.alarm || null,

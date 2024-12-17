@@ -47,6 +47,7 @@ export const userController = {
 			const { id } = req.params;
 			const profileData = {
 				...req.body,
+				imageData: req.file ? req.file.buffer : null,
 				gamePreferences: req.body.gamePreferences ? req.body.gamePreferences.split(",") : [],
 				studyPreferences: req.body.studyPreferences ? req.body.studyPreferences.split(",") : [],
 				foodPreferences: req.body.foodPreferences ? req.body.foodPreferences.split(",") : [],
