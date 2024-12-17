@@ -68,6 +68,7 @@ model Post {
   author    User?     @relation(fields: [authorId], references: [id]) // 작성자 관계
   createdAt DateTime? @default(now())                     // 작성일
   likes     Int       @default(0)                         // 좋아요 수 (기본값 0)
+  comments  Comment[] // 반대 관계 추가
 }
 
 model Comment {
