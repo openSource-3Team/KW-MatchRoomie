@@ -75,7 +75,6 @@ router.post("/register", userController.register);
  *         description: 인증 실패
  */
 router.post("/login", userController.login);
-router.post("/reset-password", userController.resetPassword);
 /**
  * @swagger
  * /users/{id}/profile:
