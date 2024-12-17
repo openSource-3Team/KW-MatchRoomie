@@ -99,4 +99,4 @@ router.put("/:id", commentController.updateComment);
  */
 router.delete("/:id", commentController.deleteComment);
 
-export default router;
+export const commentRouter = router;
