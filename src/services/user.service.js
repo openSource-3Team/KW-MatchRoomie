@@ -187,48 +187,104 @@ export const userService = {
 	},
 
 	filterUsers: async (filterData) => {
-		const buildFilter = (field) =>
-			field?.length
-				? { in: field } // 필드 값이 배열일 경우 in 조건 적용
-				: undefined;
-
-		const buildRelationFilter = (field) =>
-			field?.length
-				? {
-						some: {
-							OR: field.map((name) => ({ name })),
-						},
-				  }
-				: undefined;
-
-		// 필터 설정
 		const filters = {
-			dormitoryDuration: buildFilter(filterData.dormitoryDuration),
-			department: buildFilter(filterData.department),
-			studentId: buildFilter(filterData.studentId),
-			wakeUpTime: buildFilter(filterData.wakeUpTime),
-			sleepingTime: buildFilter(filterData.sleepingTime),
-			lightOutTime: buildFilter(filterData.lightOutTime),
-			showerTime: buildFilter(filterData.showerTime),
-			isSmoking: buildFilter(filterData.isSmoking),
-			cleaningFrequency: buildFilter(filterData.cleaningFrequency),
-			itemSharingPreference: buildFilter(filterData.itemSharingPreference),
-			lifestyle: buildFilter(filterData.lifestyle),
-			mbti: buildFilter(filterData.mbti),
-			foodPreferences: buildRelationFilter(filterData.foodPreference),
-			gamePreferences: buildRelationFilter(filterData.gamePreference),
-			studyPreferences: buildRelationFilter(filterData.studyPreference),
-			sleepingHabits: buildRelationFilter(filterData.sleepingHabits),
+			// 단순 필터 조건들
+			dormitoryDuration:
+				Array.isArray(filterData.dormitoryDuration) && filterData.dormitoryDuration.length
+					? { in: filterData.dormitoryDuration }
+					: undefined,
+			department:
+				Array.isArray(filterData.department) && filterData.department.length
+					? { in: filterData.department }
+					: undefined,
+			studentId:
+				Array.isArray(filterData.studentId) && filterData.studentId.length
+					? { in: filterData.studentId }
+					: undefined,
+			wakeUpTime:
+				Array.isArray(filterData.wakeUpTime) && filterData.wakeUpTime.length
+					? { in: filterData.wakeUpTime }
+					: undefined,
+			sleepingTime:
+				Array.isArray(filterData.sleepingTime) && filterData.sleepingTime.length
+					? { in: filterData.sleepingTime }
+					: undefined,
+			lightOutTime:
+				Array.isArray(filterData.lightOutTime) && filterData.lightOutTime.length
+					? { in: filterData.lightOutTime }
+					: undefined,
+			showerTime:
+				Array.isArray(filterData.showerTime) && filterData.showerTime.length
+					? { in: filterData.showerTime }
+					: undefined,
+			isSmoking:
+				Array.isArray(filterData.isSmoking) && filterData.isSmoking.length
+					? { in: filterData.isSmoking }
+					: undefined,
+			cleaningFrequency:
+				Array.isArray(filterData.cleaningFrequency) && filterData.cleaningFrequency.length
+					? { in: filterData.cleaningFrequency }
+					: undefined,
+			itemSharingPreference:
+				Array.isArray(filterData.itemSharingPreference) && filterData.itemSharingPreference.length
+					? { in: filterData.itemSharingPreference }
+					: undefined,
+			lifestyle:
+				Array.isArray(filterData.lifestyle) && filterData.lifestyle.length
+					? { in: filterData.lifestyle }
+					: undefined,
+			mbti:
+				Array.isArray(filterData.mbti) && filterData.mbti.length
+					? { in: filterData.mbti }
+					: undefined,
+
+			// 다대다 관계 필터들 (OR 조건 적용)
+			foodPreferences:
+				Array.isArray(filterData.foodPreference) && filterData.foodPreference.length
+					? {
+							some: {
+								OR: filterData.foodPreference.map((name) => ({ name })),
+							},
+					  }
+					: undefined,
+			gamePreferences:
+				Array.isArray(filterData.gamePreference) && filterData.gamePreference.length
+					? {
+							some: {
+								OR: filterData.gamePreference.map((name) => ({ name })),
+							},
+					  }
+					: undefined,
+			studyPreferences:
+				Array.isArray(filterData.studyPreference) && filterData.studyPreference.length
+					? {
+							some: {
+								OR: filterData.studyPreference.map((name) => ({ name })),
+							},
+					  }
+					: undefined,
+			sleepingHabits:
+				Array.isArray(filterData.sleepingHabits) && filterData.sleepingHabits.length
+					? {
+							some: {
+								OR: filterData.sleepingHabits.map((name) => ({ name })),
+							},
+					  }
+					: undefined,
 		};
 
-		// Prisma에서 필터링된 사용자 조회
-		try {
-			const filteredUsers = await userRepository.filterUsers(filters);
-			return filteredUsers;
-		} catch (error) {
-			console.error("Error filtering users:", error);
-			throw new Error("유효하지 않은 필터 조건입니다.");
-		}
+		// Prisma를 사용하여 필터링된 사용자 조회
+		const filteredUsers = await prisma.user.findMany({
+			where: filters,
+			include: {
+				foodPreferences: true,
+				gamePreferences: true,
+				studyPreferences: true,
+				sleepingHabits: true,
+			},
+		});
+
+		return filteredUsers;
 	},
 
 	sendMessage: async (senderId, receiverId, content) => {
