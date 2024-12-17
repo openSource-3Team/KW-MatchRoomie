@@ -20,33 +20,33 @@ model User {
   password              String?  @db.VarChar(255)
   name                  String?  @db.VarChar(100)
   dormitory             String?  @db.VarChar(15)
-  dormitoryDuration     String?  @db.VarChar(15)                // 기숙사 생활 기간
+  dormitoryDuration     String?  @db.VarChar(15)
   department            String?  @db.VarChar(50)
   gender                String?  @db.VarChar(15)
   studentId             String?  @map("student_id") @db.VarChar(15)
   lifestyle             String?  @db.VarChar(15)
   birth                 DateTime? @db.Date
-  phoneNumber           String? @db.VarChar(15)
-  alarm         String? @db.VarChar(15) 
+  phoneNumber           String?  @db.VarChar(15)
+  alarm                 String?  @db.VarChar(15) 
   isSmoking             Boolean?  @map("is_smoking")
-  imageData             Bytes?    @map("image_data")  
+  imageData             Bytes?    @map("image_data")
   wakeUpTime            String?   @map("wake_up_time") @db.VarChar(10)
   sleepingTime          String?   @map("sleeping_time") @db.VarChar(10)
   lightOutTime          String?   @map("light_out_time") @db.VarChar(10)
   showerTime            String?   @map("shower_time") @db.VarChar(15)
-  cleaningFrequency     String?   @db.VarChar(15)               // 청소 주기
-  itemSharingPreference String?   @db.VarChar(15)               // 물건 공유 여부
-  gamePreference        String?   @db.VarChar(50)               // 방에서 게임
-  studyPreference       String?   @db.VarChar(50)               // 방 안 공부
-  foodPreference        String?   @db.VarChar(50)               // 방 안 음식물 섭취
+  cleaningFrequency     String?   @db.VarChar(15)
+  itemSharingPreference String?   @db.VarChar(15)
+  gamePreference        String[]  @db.Text // 다중 선택 가능
+  studyPreference       String[]  @db.Text // 다중 선택 가능
+  foodPreference        String[]  @db.Text // 다중 선택 가능
+  sleepingHabits        String[]  @db.Text // 다중 선택 가능
   acLevel               String?   @map("ac_level") @db.VarChar(15)
-  mbti                  String?   @db.VarChar(4)                // MBTI 추가
+  mbti                  String?   @db.VarChar(4)
   selectedFilters       String?   @map("selected_filters") @db.Text
-  sleepingHabits        SleepingHabit[]                         // 잠버릇 관계
-  posts                 Post[]                                  // 관계는 유지
+  posts                 Post[]
   sentMessages          Message[] @relation("SentMessages")
   receivedMessages      Message[] @relation("ReceivedMessages")
-  comments              Comment[]  // 반대 관계 추가
+  comments              Comment[]
   @@map("user")
 }
 
