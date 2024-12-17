@@ -231,6 +231,9 @@ router.post("/reset-password", userController.resetPassword);
  *                 itemSharingPreference:
  *                   type: string
  *                   example: 공유해요
+ *                 mbti:
+ *                   type: string
+ *                   example: ISFP
  *                 gamePreferences:
  *                   type: array
  *                   items:
@@ -251,9 +254,6 @@ router.post("/reset-password", userController.resetPassword);
  *                   items:
  *                     type: string
  *                   example: ["코골이"]
- *                 acLevel:
- *                   type: string
- *                   example: 둔감
  *       400:
  *         description: 잘못된 요청
  */
@@ -438,9 +438,6 @@ router.get("/:id", userController.getUserById);
  *                   lifestyle:
  *                     type: string
  *                     example: 아침형
- *                   acLevel:
- *                     type: string
- *                     example: 둔감
  *                   mbti:
  *                     type: string
  *                     example: ISTJ
