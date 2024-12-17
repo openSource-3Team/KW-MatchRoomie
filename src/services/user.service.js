@@ -36,38 +36,39 @@ export const userService = {
 	},
 
 	updateProfile: async (id, profileData) => {
-		const updatedUser = await userRepository.updateProfile({
-			where: { id },
-			data: {
-				name: profileData.name || null, // 사용자 이름
-				email: profileData.email || null, // 이메일
-				imageData: profileData.imageData || null, // 프로필 이미지 (바이너리 데이터)
-				gender: profileData.gender || null, // 성별
-				birth: profileData.birth ? new Date(profileData.birth) : null,
-				dormitory: profileData.dormitory || null, // 기숙사
-				phoneNumber: profileData.phoneNumber || null, // 핸드폰 번호
-				alarm: profileData.alarm || null, // 알람 여부부
-				dormitoryDuration: profileData.dormitoryDuration || null, // 기숙사 생활 기간
-				department: profileData.department || null, // 단과대
-				studentId: profileData.studentId || null, // 학번
-				lifestyle: profileData.lifestyle || null, // 생활 패턴
-				isSmoking: profileData.isSmoking || null, // 흡연 여부
-				wakeUpTime: profileData.wakeUpTime || null, // 기상시간
-				sleepingTime: profileData.sleepingTime || null, // 취침시간
-				lightOutTime: profileData.lightOutTime || null, // 소등시간
-				showerTime: profileData.showerTime || null, // 샤워시간
-				cleaningFrequency: profileData.cleaningFrequency || null, // 청소 주기
-				itemSharingPreference: profileData.itemSharingPreference || null, // 물건 공유 여부
-				gamePreference: profileData.gamePreference || null, // 방에서 게임
-				studyPreference: profileData.studyPreference || null, // 방 안 공부
-				foodPreference: profileData.foodPreference || null, // 방 안 음식물 섭취
-				acLevel: profileData.acLevel || null, // 알람 민감도
-				selectedFilters: profileData.selectedFilters
-					? JSON.stringify(profileData.selectedFilters)
-					: null, // JSON 형태의 선택 필터
-			},
-		});
+		const dataToUpdate = {
+			name: profileData.name || null,
+			email: profileData.email || null,
+			imageData: profileData.imageData || null,
+			gender: profileData.gender || null,
+			birth: profileData.birth ? new Date(profileData.birth) : null,
+			dormitory: profileData.dormitory || null,
+			phoneNumber: profileData.phoneNumber || null,
+			alarm: profileData.alarm || null,
+			dormitoryDuration: profileData.dormitoryDuration || null,
+			department: profileData.department || null,
+			studentId: profileData.studentId || null,
+			lifestyle: profileData.lifestyle || null,
+			isSmoking: profileData.isSmoking !== undefined ? Boolean(profileData.isSmoking) : null,
+			wakeUpTime: profileData.wakeUpTime || null,
+			sleepingTime: profileData.sleepingTime || null,
+			lightOutTime: profileData.lightOutTime || null,
+			showerTime: profileData.showerTime || null,
+			cleaningFrequency: profileData.cleaningFrequency || null,
+			itemSharingPreference: profileData.itemSharingPreference || null,
+			gamePreference: profileData.gamePreference || null,
+			studyPreference: profileData.studyPreference || null,
+			foodPreference: profileData.foodPreference || null,
+			acLevel: profileData.acLevel || null,
+			selectedFilters: profileData.selectedFilters
+				? JSON.stringify(profileData.selectedFilters)
+				: null,
+		};
 
+		// userRepository에 데이터 전달
+		const updatedUser = await userRepository.updateProfile(id, dataToUpdate);
+
+		// 반환할 데이터 구성
 		return {
 			id: updatedUser.id,
 			name: updatedUser.name,
