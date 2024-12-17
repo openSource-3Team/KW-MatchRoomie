@@ -355,10 +355,6 @@ router.get("/:id", userController.getUserById);
  *                 type: array
  *                 items: { type: string }
  *                 example: ["아침형"]
- *               acLevel:
- *                 type: array
- *                 items: { type: string }
- *                 example: ["둔감"]
  *               mbti:
  *                 type: array
  *                 items: { type: string }
