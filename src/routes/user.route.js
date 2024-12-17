@@ -312,8 +312,8 @@ router.get("/:id", userController.getUserById);
  * @swagger
  * /users/filter:
  *   post:
- *     summary: 사용자 필터링 조회
- *     description: 필터 조건에 맞는 사용자 목록을 반환합니다.
+ *     summary: 필터링된 사용자 목록 조회
+ *     description: 사용자가 선택한 조건에 맞는 사용자 목록을 반환합니다.
  *     requestBody:
  *       required: true
  *       content:
@@ -323,62 +323,75 @@ router.get("/:id", userController.getUserById);
  *             properties:
  *               dormitoryDuration:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["6개월", "12개월"]
+ *                 items: { type: string }
+ *                 example: ["6개월"]
  *               department:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["컴퓨터공학과", "기계공학과"]
+ *                 items: { type: string }
+ *                 example: ["Computer Science"]
  *               studentId:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["21학번", "22학번"]
+ *                 items: { type: string }
+ *                 example: ["21학번"]
  *               wakeUpTime:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["07:00", "08:00"]
+ *                 items: { type: string }
+ *                 example: ["07:00"]
  *               sleepingTime:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["22:00", "23:00"]
+ *                 items: { type: string }
+ *                 example: ["22:00"]
+ *               lightOutTime:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["23:00"]
+ *               showerTime:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["외출 전"]
  *               isSmoking:
  *                 type: array
- *                 items:
- *                   type: boolean
+ *                 items: { type: boolean }
  *                 example: [false]
  *               cleaningFrequency:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["매일", "주 1회"]
- *               gamePreference:
+ *                 items: { type: string }
+ *                 example: ["매일"]
+ *               itemSharingPreference:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["PC 게임", "모바일 게임"]
+ *                 items: { type: string }
+ *                 example: ["공유해요"]
  *               lifestyle:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["아침형", "저녁형"]
+ *                 items: { type: string }
+ *                 example: ["아침형"]
  *               sleepingHabits:
  *                 type: array
- *                 items:
- *                   type: string
+ *                 items: { type: string }
  *                 example: ["코골이", "잠꼬대"]
  *               acLevel:
  *                 type: array
- *                 items:
- *                   type: string
- *                 example: ["민감", "보통"]
+ *                 items: { type: string }
+ *                 example: ["둔감"]
+ *               mbti:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["INTJ"]
+ *               gamePreference:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["PC 게임", "모바일 게임"]
+ *               studyPreference:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["불 켜고 해요"]
+ *               foodPreference:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["간단한 간식", "식사"]
  *     responses:
  *       200:
- *         description: 필터링 성공
+ *         description: 필터링된 사용자 목록 반환
  *         content:
  *           application/json:
  *             schema:
@@ -392,32 +405,15 @@ router.get("/:id", userController.getUserById);
  *                   name:
  *                     type: string
  *                     example: John Doe
- *                   email:
- *                     type: string
- *                     example: john.doe@example.com
- *                   dormitory:
- *                     type: string
- *                     example: A-Block
  *                   department:
  *                     type: string
  *                     example: Computer Science
- *                   studentId:
- *                     type: string
- *                     example: 21학번
- *                   wakeUpTime:
- *                     type: string
- *                     example: 07:00
- *                   sleepingTime:
- *                     type: string
- *                     example: 22:00
- *                   isSmoking:
- *                     type: boolean
- *                     example: false
- *                   acLevel:
- *                     type: string
- *                     example: 민감
- *       400:
- *         description: 잘못된 요청
+ *                   sleepingHabits:
+ *                     type: array
+ *                     items: { type: string }
+ *                     example: ["코골이", "잠꼬대"]
+ *       500:
+ *         description: 서버 오류
  */
 router.post("/filter", userController.filterUsers);
 /**

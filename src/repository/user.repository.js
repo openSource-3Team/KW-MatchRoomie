@@ -22,40 +22,14 @@ export const userRepository = {
 		}),
 
 	filterUsers: async (filters) => {
-		const {
-			dormitory,
-			department,
-			studentId,
-			wakeUpTime,
-			isSmoking,
-			sleepingHabits,
-			gender,
-			lifestyle,
-		} = filters;
-
-		// Prisma에서 조건을 동적으로 처리
-		const users = await prisma.user.findMany({
-			where: {
-				dormitory: dormitory || undefined, // 기숙사 기간
-				department: department || undefined, // 학과
-				studentId: studentId || undefined, // 학번
-				gender: gender || undefined, // 성별
-				lifestyle: lifestyle || undefined, // 생활 습관
-				wakeUpTime: wakeUpTime ? { equals: new Date(wakeUpTime) } : undefined, // 기상 시간
-				isSmoking: isSmoking !== undefined ? Boolean(isSmoking) : undefined, // 흡연 여부
-				sleepingHabits: sleepingHabits
-					? {
-							some: {
-								habit: { in: sleepingHabits }, // 잠버릇
-							},
-					  }
-					: undefined,
-			},
+		return await prisma.user.findMany({
+			where: filters,
 			include: {
-				sleepingHabits: true, // 잠버릇 포함
+				gamePreferences: true,
+				studyPreferences: true,
+				foodPreferences: true,
+				sleepingHabits: true,
 			},
 		});
-
-		return users;
 	},
 };

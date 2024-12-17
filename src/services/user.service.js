@@ -151,77 +151,43 @@ export const userService = {
 	},
 
 	filterUsers: async (filterData) => {
-		const {
-			dormitoryDuration,
-			department,
-			studentId,
-			wakeUpTime,
-			sleepingTime,
-			lightOutTime,
-			showerTime,
-			isSmoking,
-			cleaningFrequency,
-			itemSharingPreference,
-			gamePreference,
-			studyPreference,
-			foodPreference,
-			lifestyle,
-			sleepingHabits,
-			acLevel,
-			mbti,
-		} = filterData;
+		const filters = {
+			dormitoryDuration: filterData.dormitoryDuration?.length
+				? { in: filterData.dormitoryDuration }
+				: undefined,
+			department: filterData.department?.length ? { in: filterData.department } : undefined,
+			studentId: filterData.studentId?.length ? { in: filterData.studentId } : undefined,
+			wakeUpTime: filterData.wakeUpTime?.length ? { in: filterData.wakeUpTime } : undefined,
+			sleepingTime: filterData.sleepingTime?.length ? { in: filterData.sleepingTime } : undefined,
+			lightOutTime: filterData.lightOutTime?.length ? { in: filterData.lightOutTime } : undefined,
+			showerTime: filterData.showerTime?.length ? { in: filterData.showerTime } : undefined,
+			isSmoking: filterData.isSmoking?.length ? { in: filterData.isSmoking } : undefined,
+			cleaningFrequency: filterData.cleaningFrequency?.length
+				? { in: filterData.cleaningFrequency }
+				: undefined,
+			itemSharingPreference: filterData.itemSharingPreference?.length
+				? { in: filterData.itemSharingPreference }
+				: undefined,
+			lifestyle: filterData.lifestyle?.length ? { in: filterData.lifestyle } : undefined,
+			acLevel: filterData.acLevel?.length ? { in: filterData.acLevel } : undefined,
+			mbti: filterData.mbti?.length ? { in: filterData.mbti } : undefined,
+			gamePreferences: filterData.gamePreference?.length
+				? { some: { name: { in: filterData.gamePreference } } }
+				: undefined,
+			studyPreferences: filterData.studyPreference?.length
+				? { some: { name: { in: filterData.studyPreference } } }
+				: undefined,
+			foodPreferences: filterData.foodPreference?.length
+				? { some: { name: { in: filterData.foodPreference } } }
+				: undefined,
+			sleepingHabits: filterData.sleepingHabits?.length
+				? { some: { name: { in: filterData.sleepingHabits } } }
+				: undefined,
+		};
 
-		// Prisma 필터 조건 생성
-		const filters = {};
-
-		if (dormitoryDuration) filters.dormitoryDuration = { in: dormitoryDuration };
-		if (department) filters.department = { in: department };
-		if (studentId) filters.studentId = { in: studentId };
-		if (wakeUpTime) filters.wakeUpTime = { in: wakeUpTime };
-		if (sleepingTime) filters.sleepingTime = { in: sleepingTime };
-		if (lightOutTime) filters.lightOutTime = { in: lightOutTime };
-		if (showerTime) filters.showerTime = { in: showerTime };
-		if (isSmoking !== undefined) filters.isSmoking = { in: isSmoking };
-		if (cleaningFrequency) filters.cleaningFrequency = { in: cleaningFrequency };
-		if (itemSharingPreference) filters.itemSharingPreference = { in: itemSharingPreference };
-		if (gamePreference) filters.gamePreference = { in: gamePreference };
-		if (studyPreference) filters.studyPreference = { in: studyPreference };
-		if (foodPreference) filters.foodPreference = { in: foodPreference };
-		if (lifestyle) filters.lifestyle = { in: lifestyle };
-		if (sleepingHabits) filters.sleepingHabits = { some: { name: { in: sleepingHabits } } };
-		if (acLevel) filters.acLevel = { in: acLevel };
-		if (mbti) filters.mbti = { in: mbti };
-
-		// Prisma를 사용하여 필터링된 사용자 검색
-		const users = await userRepository.findMany({
-			where: filters,
-			select: {
-				id: true,
-				name: true,
-				email: true,
-				dormitory: true,
-				dormitoryDuration: true,
-				department: true,
-				studentId: true,
-				wakeUpTime: true,
-				sleepingTime: true,
-				lightOutTime: true,
-				showerTime: true,
-				isSmoking: true,
-				cleaningFrequency: true,
-				itemSharingPreference: true,
-				gamePreference: true,
-				studyPreference: true,
-				foodPreference: true,
-				lifestyle: true,
-				sleepingHabits: true,
-				acLevel: true,
-				mbti: true,
-				imageUrl: true,
-			},
-		});
-
-		return users;
+		// Prisma에서 필터링된 사용자 조회
+		const filteredUsers = await userRepository.filterUsers(filters);
+		return filteredUsers;
 	},
 
 	sendMessage: async (senderId, receiverId, content) => {
