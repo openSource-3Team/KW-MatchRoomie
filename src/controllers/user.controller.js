@@ -45,23 +45,41 @@ export const userController = {
 	updateProfile: async (req, res) => {
 		try {
 			const { id } = req.params;
+	
 			const profileData = {
 				...req.body,
-				gamePreferences: req.body.gamePreferences ? req.body.gamePreferences.split(",") : [],
-				studyPreferences: req.body.studyPreferences ? req.body.studyPreferences.split(",") : [],
-				foodPreferences: req.body.foodPreferences ? req.body.foodPreferences.split(",") : [],
-				sleepingHabits: req.body.sleepingHabits ? req.body.sleepingHabits.split(",") : [],
+				gamePreferences: Array.isArray(req.body.gamePreferences)
+					? req.body.gamePreferences // 이미 배열이면 그대로 사용
+					: req.body.gamePreferences
+					? req.body.gamePreferences.split(",") // 문자열이면 split
+					: [],
+				studyPreferences: Array.isArray(req.body.studyPreferences)
+					? req.body.studyPreferences
+					: req.body.studyPreferences
+					? req.body.studyPreferences.split(",")
+					: [],
+				foodPreferences: Array.isArray(req.body.foodPreferences)
+					? req.body.foodPreferences
+					: req.body.foodPreferences
+					? req.body.foodPreferences.split(",")
+					: [],
+				sleepingHabits: Array.isArray(req.body.sleepingHabits)
+					? req.body.sleepingHabits
+					: req.body.sleepingHabits
+					? req.body.sleepingHabits.split(",")
+					: [],
 			};
-
+	
 			// 서비스 함수 호출
 			const result = await userService.updateProfile(Number(id), profileData);
-
+	
 			res.status(200).send(response(200, result));
 		} catch (err) {
 			console.error(err);
 			res.status(400).send(response(400, { error: err.message }));
 		}
-	},
+	};
+	
 
 	getUserById: async (req, res) => {
 		try {
