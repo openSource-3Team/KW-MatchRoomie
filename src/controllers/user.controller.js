@@ -45,7 +45,7 @@ export const userController = {
 	updateProfile: async (req, res) => {
 		try {
 			const { id } = req.params;
-	
+
 			const profileData = {
 				...req.body,
 				gamePreferences: Array.isArray(req.body.gamePreferences)
@@ -69,17 +69,16 @@ export const userController = {
 					? req.body.sleepingHabits.split(",")
 					: [],
 			};
-	
+
 			// 서비스 함수 호출
 			const result = await userService.updateProfile(Number(id), profileData);
-	
+
 			res.status(200).send(response(200, result));
 		} catch (err) {
 			console.error(err);
 			res.status(400).send(response(400, { error: err.message }));
 		}
 	},
-	
 
 	getUserById: async (req, res) => {
 		try {
@@ -99,7 +98,7 @@ export const userController = {
 			return res.status(200).json(users);
 		} catch (error) {
 			console.error("Error filtering users:", error);
-			return res.status(500).json({ error: "서버 오류가 발생했습니다." });
+			res.status(400).send(response(400, { error: err.message }));
 		}
 	},
 
