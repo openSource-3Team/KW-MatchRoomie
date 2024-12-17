@@ -61,7 +61,7 @@ export const userService = {
 			// 다대다 관계 필드 처리
 			gamePreferences: Array.isArray(profileData.gamePreferences)
 				? { set: profileData.gamePreferences.map((name) => ({ name })) }
-				: { set: [] }, // 배열이 아닌 경우 빈 배열 처리
+				: { set: [] },
 			studyPreferences: Array.isArray(profileData.studyPreferences)
 				? { set: profileData.studyPreferences.map((name) => ({ name })) }
 				: { set: [] },
@@ -91,8 +91,8 @@ export const userService = {
 			email: updatedUser.email,
 			imageData: updatedUser.imageData,
 			gender: updatedUser.gender,
-			birth: updatedUser.birth,
-			dormitory: updatedUser.dormitory,
+			phoneNumber: updatedUser.phoneNumber,
+			alarm: updatedUser.alarm,
 			dormitoryDuration: updatedUser.dormitoryDuration,
 			department: updatedUser.department,
 			studentId: updatedUser.studentId,
@@ -104,11 +104,11 @@ export const userService = {
 			showerTime: updatedUser.showerTime,
 			cleaningFrequency: updatedUser.cleaningFrequency,
 			itemSharingPreference: updatedUser.itemSharingPreference,
+			acLevel: updatedUser.acLevel,
 			gamePreferences: updatedUser.gamePreferences.map((g) => g.name),
 			studyPreferences: updatedUser.studyPreferences.map((s) => s.name),
 			foodPreferences: updatedUser.foodPreferences.map((f) => f.name),
 			sleepingHabits: updatedUser.sleepingHabits.map((h) => h.name),
-			acLevel: updatedUser.acLevel,
 			selectedFilters: updatedUser.selectedFilters ? JSON.parse(updatedUser.selectedFilters) : [],
 		};
 	},

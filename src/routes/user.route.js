@@ -93,7 +93,7 @@ router.post("/reset-password", userController.resetPassword);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:  # 이미지 업로드를 위해 multipart/form-data 사용
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -110,13 +110,6 @@ router.post("/reset-password", userController.resetPassword);
  *               gender:
  *                 type: string
  *                 example: 남성
- *               birth:
- *                 type: string
- *                 format: date
- *                 example: 1995-08-15
- *               dormitory:
- *                 type: string
- *                 example: A-Block
  *               phoneNumber:
  *                 type: string
  *                 example: 010-1234-5678
@@ -156,22 +149,22 @@ router.post("/reset-password", userController.resetPassword);
  *               itemSharingPreference:
  *                 type: string
  *                 example: 공유해요
- *               gamePreferences:  # 다대다 관계에 맞게 수정
+ *               gamePreferences:
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["PC 게임해요", "모바일 게임해요"]
- *               studyPreferences:  # 다대다 관계에 맞게 수정
+ *               studyPreferences:
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["불 켜고 해요", "스탠드 키고 해요"]
- *               foodPreferences:  # 다대다 관계에 맞게 수정
+ *               foodPreferences:
  *                 type: array
  *                 items:
  *                   type: string
  *                 example: ["간단한 간식", "식사"]
- *               sleepingHabits:  # 다대다 관계에 맞게 수정
+ *               sleepingHabits:
  *                 type: array
  *                 items:
  *                   type: string
@@ -200,10 +193,48 @@ router.post("/reset-password", userController.resetPassword);
  *                 email:
  *                   type: string
  *                   example: john.doe@example.com
- *                 imageData:
+ *                 gender:
  *                   type: string
- *                   format: binary
- *                   description: 프로필 이미지 데이터
+ *                   example: 남성
+ *                 phoneNumber:
+ *                   type: string
+ *                   example: 010-1234-5678
+ *                 alarm:
+ *                   type: string
+ *                   example: 민감
+ *                 dormitoryDuration:
+ *                   type: string
+ *                   example: 6개월
+ *                 department:
+ *                   type: string
+ *                   example: Computer Science
+ *                 studentId:
+ *                   type: string
+ *                   example: 21학번
+ *                 lifestyle:
+ *                   type: string
+ *                   example: 아침형
+ *                 isSmoking:
+ *                   type: boolean
+ *                   example: false
+ *                 wakeUpTime:
+ *                   type: string
+ *                   example: 07:00
+ *                 sleepingTime:
+ *                   type: string
+ *                   example: 22:00
+ *                 lightOutTime:
+ *                   type: string
+ *                   example: 23:00
+ *                 showerTime:
+ *                   type: string
+ *                   example: 외출 전
+ *                 cleaningFrequency:
+ *                   type: string
+ *                   example: 매일
+ *                 itemSharingPreference:
+ *                   type: string
+ *                   example: 공유해요
  *                 gamePreferences:
  *                   type: array
  *                   items:
@@ -224,6 +255,13 @@ router.post("/reset-password", userController.resetPassword);
  *                   items:
  *                     type: string
  *                   example: ["코골이"]
+ *                 acLevel:
+ *                   type: string
+ *                   example: 둔감
+ *                 selectedFilters:
+ *                   type: object
+ *                   additionalProperties: true
+ *                   example: { "preferences": ["청소 주기", "공유해요"] }
  *       400:
  *         description: 잘못된 요청
  */
