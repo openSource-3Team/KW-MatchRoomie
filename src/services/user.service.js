@@ -55,7 +55,7 @@ export const userService = {
 			showerTime: profileData.showerTime || null,
 			cleaningFrequency: profileData.cleaningFrequency || null,
 			itemSharingPreference: profileData.itemSharingPreference || null,
-			acLevel: profileData.acLevel || null,
+			mbti: profileData.mbti || null,
 			gamePreferences: Array.isArray(profileData.gamePreferences)
 				? {
 						connectOrCreate: profileData.gamePreferences.map((name) => ({
@@ -121,7 +121,7 @@ export const userService = {
 			showerTime: updatedUser.showerTime,
 			cleaningFrequency: updatedUser.cleaningFrequency,
 			itemSharingPreference: updatedUser.itemSharingPreference,
-			acLevel: updatedUser.acLevel,
+			mbti: updatedUser.mbti,
 			gamePreferences: updatedUser.gamePreferences.map((g) => g.name),
 			studyPreferences: updatedUser.studyPreferences.map((s) => s.name),
 			foodPreferences: updatedUser.foodPreferences.map((f) => f.name),
