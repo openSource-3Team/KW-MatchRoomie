@@ -1,6 +1,8 @@
 import express from "express";
 import { userController } from "../controllers/user.controller.js";
+import multer from "multer";
 
+const upload = multer();
 const router = express.Router();
 
 /**
@@ -192,9 +194,10 @@ router.post("/reset-password", userController.resetPassword);
  *                 phoneNumber:
  *                   type: string
  *                   example: 010-1234-5678
- *                 imageUrl:
+ *                 imageData:
  *                   type: string
- *                   example: https://example.com/profile.jpg
+ *                   format: binary
+ *                   description: "프로필 이미지 파일 (바이너리 데이터)"
  *                 gender:
  *                   type: string
  *                   example: 남성
@@ -246,7 +249,7 @@ router.post("/reset-password", userController.resetPassword);
  *       404:
  *         description: 사용자 ID를 찾을 수 없음
  */
-router.put("/:id/profile", userController.updateProfile);
+router.put("/:id/profile", upload.single("image"), userController.updateProfile);
 /**
  * @swagger
  * /users/{id}:
@@ -287,9 +290,10 @@ router.put("/:id/profile", userController.updateProfile);
  *                 phoneNumber:
  *                   type: string
  *                   example: 010-1234-5678
- *                 imageUrl:
+ *                 imageData:
  *                   type: string
- *                   example: https://example.com/profile.jpg
+ *                   format: binary
+ *                   description: "프로필 이미지 파일 (바이너리 데이터)"
  *       404:
  *         description: 사용자 ID를 찾을 수 없음
  */

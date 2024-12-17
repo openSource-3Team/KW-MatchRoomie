@@ -29,7 +29,7 @@ model User {
   phoneNumber           String? @db.VarChar(15)
   alarm         String? @db.VarChar(15) 
   isSmoking             Boolean?  @map("is_smoking")
-  imageUrl              String?  @map("image_url") @db.VarChar(255)
+  imageData             Bytes?    @map("image_data")  
   wakeUpTime            String?   @map("wake_up_time") @db.VarChar(10)
   sleepingTime          String?   @map("sleeping_time") @db.VarChar(10)
   lightOutTime          String?   @map("light_out_time") @db.VarChar(10)
@@ -85,7 +85,7 @@ model Message {
   id         Int      @id @default(autoincrement())
   senderId   Int      // 메시지 발신자
   receiverId Int      // 메시지 수신자
-  content    String   @db.Text // 메시지 내용
+  content    String   @db.Text // 메시지 내용 
   createdAt  DateTime @default(now()) // 메시지 생성 시간
 
   // 관계 설정
