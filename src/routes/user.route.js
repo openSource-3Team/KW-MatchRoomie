@@ -172,10 +172,6 @@ router.post("/reset-password", userController.resetPassword);
  *               acLevel:
  *                 type: string
  *                 example: 둔감
- *               selectedFilters:
- *                 type: object
- *                 additionalProperties: true
- *                 example: { "preferences": ["청소 주기", "공유해요"] }
  *     responses:
  *       200:
  *         description: 프로필 업데이트 성공
@@ -258,10 +254,6 @@ router.post("/reset-password", userController.resetPassword);
  *                 acLevel:
  *                   type: string
  *                   example: 둔감
- *                 selectedFilters:
- *                   type: object
- *                   additionalProperties: true
- *                   example: { "preferences": ["청소 주기", "공유해요"] }
  *       400:
  *         description: 잘못된 요청
  */
