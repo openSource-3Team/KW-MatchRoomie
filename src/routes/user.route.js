@@ -531,7 +531,7 @@ router.get("/sent/:userId", userController.getSentMessages);
 
 /**
  * @swagger
- * /password-reset:
+ * /users/password-reset:
  *   post:
  *     summary: 비밀번호 재설정 요청
  *     description: 가입된 이메일로 비밀번호 재설정을 위한 인증 코드를 전송합니다.
@@ -572,7 +572,7 @@ router.post("/password-reset", userController.requestPasswordReset);
 
 /**
  * @swagger
- * /password-reset/verify:
+ * /users/password-reset/verify:
  *   post:
  *     summary: 비밀번호 재설정
  *     description: 인증 코드 검증 후 새로운 비밀번호로 변경합니다.
