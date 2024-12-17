@@ -99,9 +99,6 @@ router.post("/login", userController.login);
  *               name:
  *                 type: string
  *                 example: John Doe
- *               email:
- *                 type: string
- *                 example: john.doe@example.com
  *               imageData:
  *                 type: string
  *                 format: binary
