@@ -45,6 +45,8 @@ export const userService = {
 				gender: profileData.gender || null, // 성별
 				birth: profileData.birth || null, // 생년월일
 				dormitory: profileData.dormitory || null, // 기숙사
+				phoneNumber: profileData.phoneNumber || null, // 핸드폰 번호
+				alarm: profileData.alarm || null, // 알람 여부부
 				dormitoryDuration: profileData.dormitoryDuration || null, // 기숙사 생활 기간
 				department: profileData.department || null, // 단과대
 				studentId: profileData.studentId || null, // 학번
