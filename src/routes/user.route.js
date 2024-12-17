@@ -1,6 +1,8 @@
 import express from "express";
 import { userController } from "../controllers/user.controller.js";
+import multer from "multer";
 
+const upload = multer();
 const router = express.Router();
 
 /**
@@ -91,7 +93,7 @@ router.post("/reset-password", userController.resetPassword);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:  # 이미지 업로드를 위해 multipart/form-data 사용
  *           schema:
  *             type: object
  *             properties:
@@ -101,9 +103,10 @@ router.post("/reset-password", userController.resetPassword);
  *               email:
  *                 type: string
  *                 example: john.doe@example.com
- *               imageUrl:
+ *               imageData:
  *                 type: string
- *                 example: https://example.com/profile.jpg
+ *                 format: binary
+ *                 description: 프로필 이미지 파일 (바이너리)
  *               gender:
  *                 type: string
  *                 example: 남성
@@ -172,81 +175,10 @@ router.post("/reset-password", userController.resetPassword);
  *     responses:
  *       200:
  *         description: 프로필 업데이트 성공
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                   example: 1
- *                 email:
- *                   type: string
- *                   example: john.doe@example.com
- *                 name:
- *                   type: string
- *                   example: John Doe
- *                 dormitory:
- *                   type: string
- *                   example: A-Block
- *                 phoneNumber:
- *                   type: string
- *                   example: 010-1234-5678
- *                 imageUrl:
- *                   type: string
- *                   example: https://example.com/profile.jpg
- *                 gender:
- *                   type: string
- *                   example: 남성
- *                 birth:
- *                   type: string
- *                   example: 1995-08-15
- *                 department:
- *                   type: string
- *                   example: Computer Science
- *                 dormitoryDuration:
- *                   type: string
- *                   example: 6개월
- *                 wakeUpTime:
- *                   type: string
- *                   example: 07:00
- *                 sleepingTime:
- *                   type: string
- *                   example: 22:00
- *                 lightOutTime:
- *                   type: string
- *                   example: 23:00
- *                 showerTime:
- *                   type: string
- *                   example: 외출 전
- *                 cleaningFrequency:
- *                   type: string
- *                   example: 매일
- *                 itemSharingPreference:
- *                   type: string
- *                   example: 공유해요
- *                 gamePreference:
- *                   type: string
- *                   example: PC 게임
- *                 studyPreference:
- *                   type: string
- *                   example: 불 켜고 해도 돼요
- *                 foodPreference:
- *                   type: string
- *                   example: 간단한 간식
- *                 acLevel:
- *                   type: string
- *                   example: 둔감
- *                 selectedFilters:
- *                   type: object
- *                   additionalProperties: true
- *                   example: { "sleepingHabits": ["코골이", "잠꼬대"], "preferences": ["청소 주기", "공유해요"] }
  *       400:
  *         description: 잘못된 요청
- *       404:
- *         description: 사용자 ID를 찾을 수 없음
  */
-router.put("/:id/profile", userController.updateProfile);
+router.put("/:id/profile", upload.single("image"), userController.updateProfile);
 /**
  * @swagger
  * /users/{id}:
@@ -287,9 +219,10 @@ router.put("/:id/profile", userController.updateProfile);
  *                 phoneNumber:
  *                   type: string
  *                   example: 010-1234-5678
- *                 imageUrl:
+ *                 imageData:
  *                   type: string
- *                   example: https://example.com/profile.jpg
+ *                   format: binary
+ *                   description: "프로필 이미지 파일 (바이너리 데이터)"
  *       404:
  *         description: 사용자 ID를 찾을 수 없음
  */
@@ -299,7 +232,7 @@ router.get("/:id", userController.getUserById);
  * @swagger
  * /users/filter:
  *   post:
- *     summary: 사용자 필터링 조회회
+ *     summary: 사용자 필터링 조회
  *     description: 필터 조건에 맞는 사용자 목록을 반환합니다.
  *     requestBody:
  *       required: true
@@ -312,87 +245,57 @@ router.get("/:id", userController.getUserById);
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "6개월", "12개월" ]
+ *                 example: ["6개월", "12개월"]
  *               department:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "인공지능융합대학", "공과대학" ]
+ *                 example: ["컴퓨터공학과", "기계공학과"]
  *               studentId:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "21학번", "22학번" ]
+ *                 example: ["21학번", "22학번"]
  *               wakeUpTime:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "07:00", "08:00" ]
+ *                 example: ["07:00", "08:00"]
  *               sleepingTime:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "22:00", "23:00" ]
- *               lightOutTime:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "22:00", "23:00" ]
- *               showerTime:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "외출 전", "귀가 후" ]
+ *                 example: ["22:00", "23:00"]
  *               isSmoking:
  *                 type: array
  *                 items:
  *                   type: boolean
- *                 example: [ false ]
+ *                 example: [false]
  *               cleaningFrequency:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "매일", "2~3일에 한 번" ]
- *               itemSharingPreference:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "공유해요", "공유하기 싫어요" ]
+ *                 example: ["매일", "주 1회"]
  *               gamePreference:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "PC 게임", "모바일 게임" ]
- *               studyPreference:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "스탠드 켜고 하면 가능해요", "불 켜고 해도 돼요" ]
- *               foodPreference:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "음료", "간단한 간식", "배달음식" ]
+ *                 example: ["PC 게임", "모바일 게임"]
  *               lifestyle:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "아침형", "저녁형" ]
+ *                 example: ["아침형", "저녁형"]
  *               sleepingHabits:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "코골이", "잠꼬대" ]
+ *                 example: ["코골이", "잠꼬대"]
  *               acLevel:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: [ "민감", "둔감" ]
- *               mbti:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "INFJ", "ENFP" ]
+ *                 example: ["민감", "보통"]
  *     responses:
  *       200:
  *         description: 필터링 성공
@@ -415,9 +318,6 @@ router.get("/:id", userController.getUserById);
  *                   dormitory:
  *                     type: string
  *                     example: A-Block
- *                   dormitoryDuration:
- *                     type: string
- *                     example: 6개월
  *                   department:
  *                     type: string
  *                     example: Computer Science
@@ -429,53 +329,17 @@ router.get("/:id", userController.getUserById);
  *                     example: 07:00
  *                   sleepingTime:
  *                     type: string
- *                     example: 23:00
- *                   lightOutTime:
- *                     type: string
  *                     example: 22:00
- *                   showerTime:
- *                     type: string
- *                     example: 외출 전
  *                   isSmoking:
  *                     type: boolean
  *                     example: false
- *                   cleaningFrequency:
- *                     type: string
- *                     example: 매일
- *                   itemSharingPreference:
- *                     type: string
- *                     example: 공유해요
- *                   gamePreference:
- *                     type: string
- *                     example: PC 게임
- *                   studyPreference:
- *                     type: string
- *                     example: 불 켜고 해도 돼요
- *                   foodPreference:
- *                     type: string
- *                     example: 배달음식
- *                   lifestyle:
- *                     type: string
- *                     example: 아침형
- *                   sleepingHabits:
- *                     type: array
- *                     items:
- *                       type: string
- *                     example: [ "코골이", "잠꼬대" ]
  *                   acLevel:
  *                     type: string
  *                     example: 민감
- *                   mbti:
- *                     type: string
- *                     example: INFJ
- *                   imageUrl:
- *                     type: string
- *                     example: https://example.com/profile.jpg
  *       400:
  *         description: 잘못된 요청
  */
 router.post("/filter", userController.filterUsers);
-
 /**
  * @swagger
  * /users/send:

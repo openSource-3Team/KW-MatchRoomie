@@ -36,9 +36,19 @@ export const userController = {
 		try {
 			const { id } = req.params;
 			const profileData = req.body;
+			const file = req.file; // Multer로 업로드된 파일
+
+			// 이미지 데이터를 파일의 버퍼 데이터로 전달
+			if (file) {
+				profileData.imageData = file.buffer;
+			}
+
+			// 서비스 함수 호출
 			const result = await userService.updateProfile(Number(id), profileData);
+
 			res.status(200).send(response(200, result));
 		} catch (err) {
+			console.error(err);
 			res.status(400).send(response(400, { error: err.message }));
 		}
 	},

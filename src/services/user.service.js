@@ -41,9 +41,9 @@ export const userService = {
 			data: {
 				name: profileData.name || null, // 사용자 이름
 				email: profileData.email || null, // 이메일
-				imageUrl: profileData.imageUrl || null, // 프로필 이미지 URL
+				imageData: profileData.imageData || null, // 프로필 이미지 (바이너리 데이터)
 				gender: profileData.gender || null, // 성별
-				birth: profileData.birth || null, // 생년월일
+				birth: profileData.birth ? new Date(profileData.birth) : null,
 				dormitory: profileData.dormitory || null, // 기숙사
 				phoneNumber: profileData.phoneNumber || null, // 핸드폰 번호
 				alarm: profileData.alarm || null, // 알람 여부부
