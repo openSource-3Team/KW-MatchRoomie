@@ -23,7 +23,7 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // router setting
 app.use("/temp", tempRouter);
-app.use("comments", commentRouter);
+app.use("/comments", commentRouter);
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 //app.use("/habits", sleepingHabitRouter);
