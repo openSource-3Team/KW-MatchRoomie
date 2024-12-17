@@ -49,27 +49,27 @@ model User {
   @@map("user")
 }
 model GamePreference {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(50)
-  users User[] @relation("UserToGame", map: "gamePreference_user_fkey")
+  id    Int     @id @default(autoincrement())
+  name  String  @unique @db.VarChar(50)  // UNIQUE 제약 조건 추가
+  users User[]  @relation("UserToGame", references: [id])
 }
 
 model StudyPreference {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(50)
-  users User[] @relation("UserToStudy", map: "studyPreference_user_fkey")
+  id    Int     @id @default(autoincrement())
+  name  String  @unique @db.VarChar(50)
+  users User[]  @relation("UserToStudy", references: [id])
 }
 
 model FoodPreference {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(50)
-  users User[] @relation("UserToFood", map: "foodPreference_user_fkey")
+  id    Int     @id @default(autoincrement())
+  name  String  @unique @db.VarChar(50)
+  users User[]  @relation("UserToFood", references: [id])
 }
 
 model SleepingHabit {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(50)
-  users User[] @relation("UserToSleeping", map: "sleepingHabit_user_fkey")
+  id    Int     @id @default(autoincrement())
+  name  String  @unique @db.VarChar(50)
+  users User[]  @relation("UserToSleeping", references: [id])
 }
 
 model Post {
