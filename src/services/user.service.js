@@ -187,42 +187,48 @@ export const userService = {
 	},
 
 	filterUsers: async (filterData) => {
+		const buildFilter = (field) =>
+			field?.length
+				? { in: field } // 필드 값이 배열일 경우 in 조건 적용
+				: undefined;
+
+		const buildRelationFilter = (field) =>
+			field?.length
+				? {
+						some: {
+							OR: field.map((name) => ({ name })),
+						},
+				  }
+				: undefined;
+
+		// 필터 설정
 		const filters = {
-			dormitoryDuration: filterData.dormitoryDuration?.length
-				? { in: filterData.dormitoryDuration }
-				: undefined,
-			department: filterData.department?.length ? { in: filterData.department } : undefined,
-			studentId: filterData.studentId?.length ? { in: filterData.studentId } : undefined,
-			wakeUpTime: filterData.wakeUpTime?.length ? { in: filterData.wakeUpTime } : undefined,
-			sleepingTime: filterData.sleepingTime?.length ? { in: filterData.sleepingTime } : undefined,
-			lightOutTime: filterData.lightOutTime?.length ? { in: filterData.lightOutTime } : undefined,
-			showerTime: filterData.showerTime?.length ? { in: filterData.showerTime } : undefined,
-			isSmoking: filterData.isSmoking?.length ? { in: filterData.isSmoking } : undefined,
-			cleaningFrequency: filterData.cleaningFrequency?.length
-				? { in: filterData.cleaningFrequency }
-				: undefined,
-			itemSharingPreference: filterData.itemSharingPreference?.length
-				? { in: filterData.itemSharingPreference }
-				: undefined,
-			lifestyle: filterData.lifestyle?.length ? { in: filterData.lifestyle } : undefined,
-			mbti: filterData.mbti?.length ? { in: filterData.mbti } : undefined,
-			gamePreferences: filterData.gamePreference?.length
-				? { some: { name: { in: filterData.gamePreference } } }
-				: undefined,
-			studyPreferences: filterData.studyPreference?.length
-				? { some: { name: { in: filterData.studyPreference } } }
-				: undefined,
-			foodPreferences: filterData.foodPreference?.length
-				? { some: { name: { in: filterData.foodPreference } } }
-				: undefined,
-			sleepingHabits: filterData.sleepingHabits?.length
-				? { some: { name: { in: filterData.sleepingHabits } } }
-				: undefined,
+			dormitoryDuration: buildFilter(filterData.dormitoryDuration),
+			department: buildFilter(filterData.department),
+			studentId: buildFilter(filterData.studentId),
+			wakeUpTime: buildFilter(filterData.wakeUpTime),
+			sleepingTime: buildFilter(filterData.sleepingTime),
+			lightOutTime: buildFilter(filterData.lightOutTime),
+			showerTime: buildFilter(filterData.showerTime),
+			isSmoking: buildFilter(filterData.isSmoking),
+			cleaningFrequency: buildFilter(filterData.cleaningFrequency),
+			itemSharingPreference: buildFilter(filterData.itemSharingPreference),
+			lifestyle: buildFilter(filterData.lifestyle),
+			mbti: buildFilter(filterData.mbti),
+			foodPreferences: buildRelationFilter(filterData.foodPreference),
+			gamePreferences: buildRelationFilter(filterData.gamePreference),
+			studyPreferences: buildRelationFilter(filterData.studyPreference),
+			sleepingHabits: buildRelationFilter(filterData.sleepingHabits),
 		};
 
 		// Prisma에서 필터링된 사용자 조회
-		const filteredUsers = await userRepository.filterUsers(filters);
-		return filteredUsers;
+		try {
+			const filteredUsers = await userRepository.filterUsers(filters);
+			return filteredUsers;
+		} catch (error) {
+			console.error("Error filtering users:", error);
+			throw new Error("유효하지 않은 필터 조건입니다.");
+		}
 	},
 
 	sendMessage: async (senderId, receiverId, content) => {
