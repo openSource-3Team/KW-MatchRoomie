@@ -1,6 +1,15 @@
 import { userRepository } from "../repository/user.repository.js";
 import { messageRepository } from "../repository/message.repository.js";
 import { prisma } from "../../config/db.config.js";
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: "hig26827463@gmail.com", // Gmail 계정
+		pass: "!Mjype1421", // 앱 비밀번호
+	},
+});
 
 export const userService = {
 	registerUser: async (email, password) => {
@@ -26,14 +35,35 @@ export const userService = {
 		return { id: user.id, email: user.email };
 	},
 
-	resetPassword: async (email, newPassword) => {
+	requestPasswordReset: async (email) => {
 		const user = await userRepository.findByEmail(email);
-		if (!user) {
-			throw new Error("유저가 없습니다.");
-		}
+		if (!user) throw new Error("등록된 이메일이 아닙니다.");
 
-		await userRepository.updatePassword(user.id, newPassword);
-		return { success: true, message: "성공적으로 변경되었습니다." };
+		// 6자리 인증 코드 생성
+		const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+		// 인증 코드 저장
+		await userRepository.saveVerificationCode(email, verificationCode);
+
+		// 이메일 전송
+		await transporter.sendMail({
+			from: '"Password Reset" hig26827463@gmail.com',
+			to: email,
+			subject: "비밀번호 재설정 인증 코드",
+			text: `비밀번호 재설정 인증 코드: ${verificationCode}`,
+		});
+
+		return { message: "이메일로 인증 코드를 전송했습니다." };
+	},
+
+	// 인증 코드 검증 및 비밀번호 재설정
+	verifyCodeAndResetPassword: async (email, code, newPassword) => {
+		const user = await userRepository.validateVerificationCode(email, code);
+		if (!user) throw new Error("유효하지 않은 인증 코드입니다.");
+
+		// 비밀번호 업데이트
+		await userRepository.updatePassword(email, newPassword);
+		return { message: "비밀번호가 성공적으로 변경되었습니다." };
 	},
 
 	updateProfile: async (id, profileData) => {

@@ -22,13 +22,23 @@ export const userController = {
 		}
 	},
 
-	resetPassword: async (req, res) => {
+	requestPasswordReset: async (req, res) => {
+		const { email } = req.body;
 		try {
-			const { email, newPassword } = req.body;
-			const result = await userService.resetPassword(email, newPassword);
-			res.status(200).send(response(200, result));
-		} catch (err) {
-			res.status(400).send(response(400, { error: err.message }));
+			const response = await userService.requestPasswordReset(email);
+			res.status(200).json(response);
+		} catch (error) {
+			res.status(400).json({ error: error.message });
+		}
+	},
+
+	verifyCodeAndResetPassword: async (req, res) => {
+		const { email, code, newPassword } = req.body;
+		try {
+			const response = await userService.verifyCodeAndResetPassword(email, code, newPassword);
+			res.status(200).json(response);
+		} catch (error) {
+			res.status(400).json({ error: error.message });
 		}
 	},
 
