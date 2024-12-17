@@ -180,6 +180,35 @@ router.put("/:id", postController.updatePost);
  *         description: 게시물 삭제 성공
  *         content:
  *           application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               likes:
+ *                 type: integer
+ *                 example: 20
+ *       404:
+ *         description: 게시물을 찾을 수 없음
+ */
+router.delete("/:id", postController.deletePost);
+
+/**
+ * @swagger
+ * /posts/{id}/like:
+ *   patch:
+ *     summary: 게시글 좋아요 증가
+ *     description: 특정 게시글의 좋아요 수를 1 증가시킵니다.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 게시글 ID
+ *     responses:
+ *       200:
+ *         description: 좋아요 수 증가 성공
+ *         content:
+ *           application/json:
  *             schema:
  *               type: object
  *               properties:
@@ -187,8 +216,37 @@ router.put("/:id", postController.updatePost);
  *                   type: boolean
  *                   example: true
  *       404:
- *         description: 게시물을 찾을 수 없음
+ *         description: 게시글을 찾을 수 없음
  */
-router.delete("/:id", postController.deletePost);
+router.patch("/:id/like", postController.increaseLikes);
+
+/**
+ * @swagger
+ * /posts/{id}/dislike:
+ *   patch:
+ *     summary: 게시글 좋아요 감소
+ *     description: 특정 게시글의 좋아요 수를 1 감소시킵니다.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 게시글 ID
+ *     responses:
+ *       200:
+ *         description: 좋아요 수 증가 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       404:
+ *         description: 게시글을 찾을 수 없음
+ */
+router.patch("/:id/dislike", postController.decreaseLikes);
 
 export const postRouter = router;

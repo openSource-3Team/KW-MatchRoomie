@@ -61,12 +61,23 @@ model SleepingHabit {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())        // 선택적
-  title     String?   @db.VarChar(255)                    // 선택적
-  content   String?                                       // 선택적
-  authorId  Int?                                          // 선택적
-  author    User?     @relation(fields: [authorId], references: [id]) // 선택적 관계
-  createdAt DateTime? @default(now())                     // 선택적
+  id        Int      @id @default(autoincrement())        // 게시글 ID
+  title     String?   @db.VarChar(255)                    // 게시글 제목
+  content   String?                                       // 게시글 내용
+  authorId  Int?                                          // 작성자 ID
+  author    User?     @relation(fields: [authorId], references: [id]) // 작성자 관계
+  createdAt DateTime? @default(now())                     // 작성일
+  likes     Int       @default(0)                         // 좋아요 수 (기본값 0)
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String    @db.Text
+  postId    Int       // 연결된 게시글 ID
+  post      Post      @relation(fields: [postId], references: [id])
+  authorId  Int       // 댓글 작성자 ID
+  author    User      @relation(fields: [authorId], references: [id])
+  createdAt DateTime  @default(now())
 }
 
 model Message {
