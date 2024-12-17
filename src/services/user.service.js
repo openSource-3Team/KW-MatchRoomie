@@ -169,7 +169,6 @@ export const userService = {
 				? { in: filterData.itemSharingPreference }
 				: undefined,
 			lifestyle: filterData.lifestyle?.length ? { in: filterData.lifestyle } : undefined,
-			acLevel: filterData.acLevel?.length ? { in: filterData.acLevel } : undefined,
 			mbti: filterData.mbti?.length ? { in: filterData.mbti } : undefined,
 			gamePreferences: filterData.gamePreference?.length
 				? { some: { name: { in: filterData.gamePreference } } }
