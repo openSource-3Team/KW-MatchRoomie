@@ -43,7 +43,7 @@ router.post("/register", userController.register);
  * /users/login:
  *   post:
  *     summary: 사용자 로그인
- *     description: 사용자 인증 후 토큰을 반환합니다.
+ *     description: 로그인 id 반환.
  *     requestBody:
  *       required: true
  *       content:
@@ -65,9 +65,10 @@ router.post("/register", userController.register);
  *             schema:
  *               type: object
  *               properties:
- *                 token:
+ *                 id:
+ *                   type: integer
+ *                 email:
  *                   type: string
- *                   example: eyJhbGci...
  *       401:
  *         description: 인증 실패
  */

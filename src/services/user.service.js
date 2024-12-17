@@ -22,7 +22,7 @@ export const userService = {
 			throw new Error("비밀번호가 일치하지 않습니다. ");
 		}
 
-		return { id: user.id, email: user.email, name: user.name };
+		return { id: user.id, email: user.email };
 	},
 
 	resetPassword: async (email, newPassword) => {
