@@ -78,7 +78,7 @@ export const userController = {
 			console.error(err);
 			res.status(400).send(response(400, { error: err.message }));
 		}
-	};
+	},
 	
 
 	getUserById: async (req, res) => {
