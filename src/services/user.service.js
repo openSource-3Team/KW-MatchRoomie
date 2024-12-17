@@ -41,8 +41,6 @@ export const userService = {
 			email: profileData.email || null,
 			imageData: profileData.imageData || null,
 			gender: profileData.gender || null,
-			birth: profileData.birth ? new Date(profileData.birth) : null,
-			dormitory: profileData.dormitory || null,
 			phoneNumber: profileData.phoneNumber || null,
 			alarm: profileData.alarm || null,
 			dormitoryDuration: profileData.dormitoryDuration || null,
@@ -56,24 +54,25 @@ export const userService = {
 			showerTime: profileData.showerTime || null,
 			cleaningFrequency: profileData.cleaningFrequency || null,
 			itemSharingPreference: profileData.itemSharingPreference || null,
-			gamePreference: profileData.gamePreference || null,
-			studyPreference: profileData.studyPreference || null,
-			foodPreference: profileData.foodPreference || null,
+			gamePreference: Array.isArray(profileData.gamePreference) ? profileData.gamePreference : [],
+			studyPreference: Array.isArray(profileData.studyPreference)
+				? profileData.studyPreference
+				: [],
+			foodPreference: Array.isArray(profileData.foodPreference) ? profileData.foodPreference : [],
+			sleepingHabits: Array.isArray(profileData.sleepingHabits) ? profileData.sleepingHabits : [],
 			acLevel: profileData.acLevel || null,
 			selectedFilters: profileData.selectedFilters
 				? JSON.stringify(profileData.selectedFilters)
 				: null,
 		};
 
-		// userRepository에 데이터 전달
 		const updatedUser = await userRepository.updateProfile(id, dataToUpdate);
 
-		// 반환할 데이터 구성
 		return {
 			id: updatedUser.id,
 			name: updatedUser.name,
 			email: updatedUser.email,
-			imageUrl: updatedUser.imageUrl,
+			imageData: updatedUser.imageData,
 			gender: updatedUser.gender,
 			birth: updatedUser.birth,
 			dormitory: updatedUser.dormitory,
@@ -91,6 +90,7 @@ export const userService = {
 			gamePreference: updatedUser.gamePreference,
 			studyPreference: updatedUser.studyPreference,
 			foodPreference: updatedUser.foodPreference,
+			sleepingHabits: updatedUser.sleepingHabits,
 			acLevel: updatedUser.acLevel,
 			selectedFilters: updatedUser.selectedFilters ? JSON.parse(updatedUser.selectedFilters) : [],
 		};

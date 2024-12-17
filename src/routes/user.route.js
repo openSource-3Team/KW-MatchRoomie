@@ -157,21 +157,32 @@ router.post("/reset-password", userController.resetPassword);
  *                 type: string
  *                 example: 공유해요
  *               gamePreference:
- *                 type: string
- *                 example: PC 게임
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["PC 게임해요", "모바일 게임해요"]
  *               studyPreference:
- *                 type: string
- *                 example: 불 켜고 해도 돼요
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["불 켜고 해요", "스탠드 키고 해요"]
  *               foodPreference:
- *                 type: string
- *                 example: 간단한 간식
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["간단한 간식", "식사"]
+ *               sleepingHabits:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["코골이", "잠꼬대"]
  *               acLevel:
  *                 type: string
  *                 example: 둔감
  *               selectedFilters:
  *                 type: object
  *                 additionalProperties: true
- *                 example: { "sleepingHabits": ["코골이", "잠꼬대"], "preferences": ["청소 주기", "공유해요"] }
+ *                 example: { "preferences": ["청소 주기", "공유해요"] }
  *     responses:
  *       200:
  *         description: 프로필 업데이트 성공
