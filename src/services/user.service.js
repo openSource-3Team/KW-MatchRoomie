@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
 		user: "hig26827463@gmail.com", // Gmail 계정
-		pass: "!Mjype1421", // 앱 비밀번호
+		pass: "gssj ghci uuga qfcd", // 앱 비밀번호
 	},
 });
 
