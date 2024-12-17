@@ -16,6 +16,9 @@ COPY . .
 # Prisma Client 생성
 RUN npx prisma generate
 
+# 데이터베이스 마이그레이션 적용
+RUN npx prisma migrate deploy
+
 # 애플리케이션 실행 포트 설정
 EXPOSE 3000
 
