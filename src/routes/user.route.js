@@ -530,4 +530,10 @@ router.get("/received/:userId", userController.getReceivedMessages);
  */
 router.get("/sent/:userId", userController.getSentMessages);
 
+// 비밀번호 재설정 요청 (이메일로 인증 코드 전송)
+router.post("/password-reset", userController.requestPasswordReset);
+
+// 인증 코드 검증 및 비밀번호 변경
+router.post("/password-reset/verify", userController.verifyCodeAndResetPassword);
+
 export const userRouter = router;

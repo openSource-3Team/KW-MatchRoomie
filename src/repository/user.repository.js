@@ -12,8 +12,6 @@ export const userRepository = {
 		});
 	},
 	findByEmail: (email) => prisma.user.findUnique({ where: { email } }),
-	updatePassword: (id, newPassword) =>
-		prisma.user.update({ where: { id }, data: { password: newPassword } }),
 	updateProfile: (id, data) => prisma.user.update({ where: { id }, data }),
 	findById: (id) =>
 		prisma.user.findUnique({
@@ -30,6 +28,29 @@ export const userRepository = {
 				foodPreferences: true,
 				sleepingHabits: true,
 			},
+		});
+	},
+
+	// 인증 코드 저장
+	saveVerificationCode: async (email, code) => {
+		return await prisma.user.update({
+			where: { email },
+			data: { resetToken: code },
+		});
+	},
+
+	// 인증 코드 검증
+	validateVerificationCode: async (email, code) => {
+		return await prisma.user.findFirst({
+			where: { email, resetToken: code },
+		});
+	},
+
+	// 비밀번호 업데이트 및 인증 코드 삭제
+	updatePassword: async (email, newPassword) => {
+		return await prisma.user.update({
+			where: { email },
+			data: { password: newPassword, resetToken: null },
 		});
 	},
 };
