@@ -1,25 +1,6 @@
 import express from "express";
 import { userController } from "../controllers/user.controller.js";
-import multer from "multer";
-import path from "path";
 
-// multer 설정
-const storage = multer.memoryStorage(); // 메모리에 저장
-const upload = multer({
-	storage,
-	fileFilter: (req, file, cb) => {
-		const fileTypes = /jpeg|jpg|png/; // 허용할 이미지 파일 확장자
-		const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-		const mimetype = fileTypes.test(file.mimetype);
-
-		if (extname && mimetype) {
-			return cb(null, true);
-		} else {
-			cb(new Error("이미지 파일만 업로드 가능합니다."));
-		}
-	},
-	limits: { fileSize: 5 * 1024 * 1024 }, // 5MB 제한
-});
 const router = express.Router();
 
 /**
@@ -109,17 +90,13 @@ router.post("/login", userController.login);
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:
  *               name:
  *                 type: string
  *                 example: John Doe
- *               imageData:
- *                 type: string
- *                 format: binary
- *                 description: 프로필 이미지 파일 (바이너리)
  *               gender:
  *                 type: string
  *                 example: 남성
@@ -270,7 +247,7 @@ router.post("/login", userController.login);
  *       400:
  *         description: 잘못된 요청
  */
-router.put("/:id/profile", upload.single("image"), userController.updateProfile);
+router.put("/:id/profile", userController.updateProfile);
 
 /**
  * @swagger
