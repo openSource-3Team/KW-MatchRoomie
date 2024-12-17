@@ -36,7 +36,7 @@ export const userService = {
 	},
 
 	updateProfile: async (id, profileData) => {
-		const updatedUser = await userRepository.update({
+		const updatedUser = await userRepository.updateProfile({
 			where: { id },
 			data: {
 				name: profileData.name || null, // 사용자 이름
