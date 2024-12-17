@@ -35,7 +35,13 @@ export const userController = {
 	updateProfile: async (req, res) => {
 		try {
 			const { id } = req.params;
-			const profileData = req.body;
+			const profileData = {
+				...req.body,
+				gamePreferences: req.body.gamePreferences ? req.body.gamePreferences.split(",") : [],
+				studyPreferences: req.body.studyPreferences ? req.body.studyPreferences.split(",") : [],
+				foodPreferences: req.body.foodPreferences ? req.body.foodPreferences.split(",") : [],
+				sleepingHabits: req.body.sleepingHabits ? req.body.sleepingHabits.split(",") : [],
+			};
 			const file = req.file; // Multer로 업로드된 파일
 
 			// 이미지 데이터를 파일의 버퍼 데이터로 전달
