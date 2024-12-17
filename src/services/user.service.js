@@ -1,5 +1,6 @@
 import { userRepository } from "../repository/user.repository.js";
 import { messageRepository } from "../repository/message.repository.js";
+import { prisma } from "../../config/db.config.js";
 
 export const userService = {
 	registerUser: async (email, password) => {
