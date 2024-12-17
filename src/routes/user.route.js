@@ -336,7 +336,7 @@ router.get("/:id", userController.getUserById);
  *               wakeUpTime:
  *                 type: array
  *                 items: { type: string }
- *                 example: ["07:00"]
+ *                 example: ["07:00", "08:00"]
  *               sleepingTime:
  *                 type: array
  *                 items: { type: string }
@@ -348,7 +348,7 @@ router.get("/:id", userController.getUserById);
  *               showerTime:
  *                 type: array
  *                 items: { type: string }
- *                 example: ["외출 전"]
+ *                 example: ["외출 전", "귀가 후"]
  *               isSmoking:
  *                 type: array
  *                 items: { type: boolean }
@@ -356,7 +356,7 @@ router.get("/:id", userController.getUserById);
  *               cleaningFrequency:
  *                 type: array
  *                 items: { type: string }
- *                 example: ["매일"]
+ *                 example: ["매일 항상 깨끗이"]
  *               itemSharingPreference:
  *                 type: array
  *                 items: { type: string }
@@ -365,10 +365,6 @@ router.get("/:id", userController.getUserById);
  *                 type: array
  *                 items: { type: string }
  *                 example: ["아침형"]
- *               sleepingHabits:
- *                 type: array
- *                 items: { type: string }
- *                 example: ["코골이", "잠꼬대"]
  *               acLevel:
  *                 type: array
  *                 items: { type: string }
@@ -376,7 +372,7 @@ router.get("/:id", userController.getUserById);
  *               mbti:
  *                 type: array
  *                 items: { type: string }
- *                 example: ["INTJ"]
+ *                 example: ["ISTJ", "INFJ"]
  *               gamePreference:
  *                 type: array
  *                 items: { type: string }
@@ -384,11 +380,15 @@ router.get("/:id", userController.getUserById);
  *               studyPreference:
  *                 type: array
  *                 items: { type: string }
- *                 example: ["불 켜고 해요"]
+ *                 example: ["불 켜고 해도 돼요"]
  *               foodPreference:
  *                 type: array
  *                 items: { type: string }
  *                 example: ["간단한 간식", "식사"]
+ *               sleepingHabits:
+ *                 type: array
+ *                 items: { type: string }
+ *                 example: ["코골이", "잠꼬대"]
  *     responses:
  *       200:
  *         description: 필터링된 사용자 목록 반환
@@ -405,13 +405,63 @@ router.get("/:id", userController.getUserById);
  *                   name:
  *                     type: string
  *                     example: John Doe
+ *                   dormitoryDuration:
+ *                     type: string
+ *                     example: 6개월
  *                   department:
  *                     type: string
  *                     example: Computer Science
+ *                   studentId:
+ *                     type: string
+ *                     example: 21학번
+ *                   wakeUpTime:
+ *                     type: string
+ *                     example: 07:00
+ *                   sleepingTime:
+ *                     type: string
+ *                     example: 22:00
+ *                   lightOutTime:
+ *                     type: string
+ *                     example: 23:00
+ *                   showerTime:
+ *                     type: string
+ *                     example: 귀가 후
+ *                   isSmoking:
+ *                     type: boolean
+ *                     example: false
+ *                   cleaningFrequency:
+ *                     type: string
+ *                     example: 매일 항상 깨끗이
+ *                   itemSharingPreference:
+ *                     type: string
+ *                     example: 공유해요
+ *                   lifestyle:
+ *                     type: string
+ *                     example: 아침형
+ *                   acLevel:
+ *                     type: string
+ *                     example: 둔감
+ *                   mbti:
+ *                     type: string
+ *                     example: ISTJ
+ *                   gamePreferences:
+ *                     type: array
+ *                     items: { type: string }
+ *                     example: ["PC 게임", "모바일 게임"]
+ *                   studyPreferences:
+ *                     type: array
+ *                     items: { type: string }
+ *                     example: ["불 켜고 해도 돼요"]
+ *                   foodPreferences:
+ *                     type: array
+ *                     items: { type: string }
+ *                     example: ["간단한 간식", "식사"]
  *                   sleepingHabits:
  *                     type: array
  *                     items: { type: string }
  *                     example: ["코골이", "잠꼬대"]
+ *       400:
+ *         description: 잘못된 요청
  *       500:
  *         description: 서버 오류
  */
