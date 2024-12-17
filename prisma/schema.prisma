@@ -30,7 +30,6 @@ model User {
   phoneNumber           String?  @db.VarChar(15)
   alarm                 String?  @db.VarChar(15) 
   isSmoking             Boolean?  @map("is_smoking")
-  imageData             Bytes?    @map("image_data")
   wakeUpTime            String?   @map("wake_up_time") @db.VarChar(10)
   sleepingTime          String?   @map("sleeping_time") @db.VarChar(10)
   lightOutTime          String?   @map("light_out_time") @db.VarChar(10)

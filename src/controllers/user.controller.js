@@ -47,18 +47,11 @@ export const userController = {
 			const { id } = req.params;
 			const profileData = {
 				...req.body,
-				imageData: req.file ? req.file.buffer : null,
 				gamePreferences: req.body.gamePreferences ? req.body.gamePreferences.split(",") : [],
 				studyPreferences: req.body.studyPreferences ? req.body.studyPreferences.split(",") : [],
 				foodPreferences: req.body.foodPreferences ? req.body.foodPreferences.split(",") : [],
 				sleepingHabits: req.body.sleepingHabits ? req.body.sleepingHabits.split(",") : [],
 			};
-			const file = req.file; // Multer로 업로드된 파일
-
-			// 이미지 데이터를 파일의 버퍼 데이터로 전달
-			if (file) {
-				profileData.imageData = file.buffer;
-			}
 
 			// 서비스 함수 호출
 			const result = await userService.updateProfile(Number(id), profileData);
