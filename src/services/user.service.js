@@ -207,9 +207,11 @@ export const userService = {
 				filterData.lightOutTime?.length ? { lightOutTime: { in: filterData.lightOutTime } } : {},
 				filterData.showerTime?.length ? { showerTime: { in: filterData.showerTime } } : {},
 				filterData.isSmoking?.length
-					? { OR: filterData.isSmoking.map((value) => ({
-                          isSmoking: { equals: value }, // Boolean 필드 처리
-                      })), } // Boolean 필드 처리
+					? {
+							OR: filterData.isSmoking.map((value) => ({
+								isSmoking: { equals: value }, // Boolean 필드 처리
+							})),
+					  }
 					: {},
 				filterData.cleaningFrequency?.length
 					? { cleaningFrequency: { in: filterData.cleaningFrequency } }
@@ -255,6 +257,10 @@ export const userService = {
 							},
 					  }
 					: {},
+				// alarm 필드 추가
+				filterData.alarm?.length ? { alarm: { in: filterData.alarm } } : {},
+				// gender 필드 추가
+				filterData.gender?.length ? { gender: { in: filterData.gender } } : {},
 			],
 		};
 
@@ -267,6 +273,9 @@ export const userService = {
 				sleepingHabits: true,
 			},
 		});
+
+		return filteredUsers;
+	},
 
 		return filteredUsers;
 	},
