@@ -195,93 +195,80 @@ export const userService = {
 	},
 
 	filterUsers: async (filterData) => {
-		const filters = [];
+		const filters = {
+			OR: [
+				{
+					dormitoryDuration: filterData.dormitoryDuration?.length
+						? { in: filterData.dormitoryDuration }
+						: undefined,
+				},
+				{
+					department: filterData.department?.length ? { in: filterData.department } : undefined,
+				},
+				{
+					studentId: filterData.studentId?.length ? { in: filterData.studentId } : undefined,
+				},
+				{
+					wakeUpTime: filterData.wakeUpTime?.length ? { in: filterData.wakeUpTime } : undefined,
+				},
+				{
+					sleepingTime: filterData.sleepingTime?.length
+						? { in: filterData.sleepingTime }
+						: undefined,
+				},
+				{
+					lightOutTime: filterData.lightOutTime?.length
+						? { in: filterData.lightOutTime }
+						: undefined,
+				},
+				{
+					showerTime: filterData.showerTime?.length ? { in: filterData.showerTime } : undefined,
+				},
+				{
+					isSmoking: filterData.isSmoking?.length ? { in: filterData.isSmoking } : undefined,
+				},
+				{
+					cleaningFrequency: filterData.cleaningFrequency?.length
+						? { in: filterData.cleaningFrequency }
+						: undefined,
+				},
+				{
+					itemSharingPreference: filterData.itemSharingPreference?.length
+						? { in: filterData.itemSharingPreference }
+						: undefined,
+				},
+				{
+					lifestyle: filterData.lifestyle?.length ? { in: filterData.lifestyle } : undefined,
+				},
+				{
+					mbti: filterData.mbti?.length ? { in: filterData.mbti } : undefined,
+				},
+				// 관계형 데이터에서 다중 값 OR 처리
+				{
+					foodPreferences: filterData.foodPreference?.length
+						? { some: { name: { in: filterData.foodPreference } } }
+						: undefined,
+				},
+				{
+					gamePreferences: filterData.gamePreference?.length
+						? { some: { name: { in: filterData.gamePreference } } }
+						: undefined,
+				},
+				{
+					studyPreferences: filterData.studyPreference?.length
+						? { some: { name: { in: filterData.studyPreference } } }
+						: undefined,
+				},
+				{
+					sleepingHabits: filterData.sleepingHabits?.length
+						? { some: { name: { in: filterData.sleepingHabits } } }
+						: undefined,
+				},
+			].filter((filter) => Object.values(filter).some((value) => value !== undefined)), // undefined 제거
+		};
 
-		// 문자열 컬럼 필터링 (예: dormitoryDuration, department, etc.)
-		if (filterData.dormitoryDuration?.length) {
-			filters.push({ dormitoryDuration: { in: filterData.dormitoryDuration } });
-		}
-		if (filterData.department?.length) {
-			filters.push({ department: { in: filterData.department } });
-		}
-		if (filterData.studentId?.length) {
-			filters.push({ studentId: { in: filterData.studentId } });
-		}
-		if (filterData.wakeUpTime?.length) {
-			filters.push({ wakeUpTime: { in: filterData.wakeUpTime } });
-		}
-		if (filterData.sleepingTime?.length) {
-			filters.push({ sleepingTime: { in: filterData.sleepingTime } });
-		}
-		if (filterData.lightOutTime?.length) {
-			filters.push({ lightOutTime: { in: filterData.lightOutTime } });
-		}
-		if (filterData.showerTime?.length) {
-			filters.push({ showerTime: { in: filterData.showerTime } });
-		}
-		if (filterData.isSmoking?.length) {
-			filters.push({
-				OR: filterData.isSmoking.map((value) => ({ isSmoking: value })),
-			});
-		}
-		if (filterData.cleaningFrequency?.length) {
-			filters.push({ cleaningFrequency: { in: filterData.cleaningFrequency } });
-		}
-		if (filterData.itemSharingPreference?.length) {
-			filters.push({
-				itemSharingPreference: { in: filterData.itemSharingPreference },
-			});
-		}
-		if (filterData.lifestyle?.length) {
-			filters.push({ lifestyle: { in: filterData.lifestyle } });
-		}
-		if (filterData.mbti?.length) {
-			filters.push({ mbti: { in: filterData.mbti } });
-		}
-
-		// 관계 테이블 필터링 (예: gamePreferences, foodPreferences)
-		if (filterData.foodPreference?.length) {
-			filters.push({
-				foodPreferences: {
-					some: {
-						OR: filterData.foodPreference.map((name) => ({ name })),
-					},
-				},
-			});
-		}
-		if (filterData.gamePreference?.length) {
-			filters.push({
-				gamePreferences: {
-					some: {
-						OR: filterData.gamePreference.map((name) => ({ name })),
-					},
-				},
-			});
-		}
-		if (filterData.studyPreference?.length) {
-			filters.push({
-				studyPreferences: {
-					some: {
-						OR: filterData.studyPreference.map((name) => ({ name })),
-					},
-				},
-			});
-		}
-		if (filterData.sleepingHabits?.length) {
-			filters.push({
-				sleepingHabits: {
-					some: {
-						OR: filterData.sleepingHabits.map((name) => ({ name })),
-					},
-				},
-			});
-		}
-
-		// Prisma 쿼리 실행
 		const filteredUsers = await prisma.user.findMany({
-			where: {
-				AND: filters, // 모든 필터 조건을 만족
-			},
+			where: filters,
 			include: {
 				foodPreferences: true,
 				gamePreferences: true,
