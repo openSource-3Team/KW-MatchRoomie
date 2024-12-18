@@ -277,9 +277,6 @@ export const userService = {
 		return filteredUsers;
 	},
 
-		return filteredUsers;
-	},
-
 	sendMessage: async (senderId, receiverId, content) => {
 		if (!senderId || !receiverId || !content) {
 			throw new Error("Sender, receiver, and content are required");
