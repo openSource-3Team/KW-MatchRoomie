@@ -86,7 +86,7 @@ export const userController = {
 			const result = await userService.getUserById(Number(id));
 			res.status(200).send(response(200, result));
 		} catch (err) {
-			res.status(404).send(response(404, { error: err.message }));
+			res.status(404).send(response(404, { error: err.message || "Unknown error occurred" }));
 		}
 	},
 
@@ -97,7 +97,8 @@ export const userController = {
 
 			return res.status(200).json(users);
 		} catch (err) {
-			res.status(400).send(response(400, { error: err.message }));
+			console.error(err);
+			res.status(404).send(response(404, { error: err.message || "Unknown error occurred" }));
 		}
 	},
 
