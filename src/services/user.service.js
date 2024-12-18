@@ -196,7 +196,7 @@ export const userService = {
 
 	filterUsers: async (filterData) => {
 		const filters = {
-			OR: [
+			AND: [
 				{
 					dormitoryDuration: filterData.dormitoryDuration?.length
 						? { in: filterData.dormitoryDuration }
