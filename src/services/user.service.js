@@ -207,7 +207,9 @@ export const userService = {
 				filterData.lightOutTime?.length ? { lightOutTime: { in: filterData.lightOutTime } } : {},
 				filterData.showerTime?.length ? { showerTime: { in: filterData.showerTime } } : {},
 				filterData.isSmoking?.length
-					? { isSmoking: { equals: filterData.isSmoking[0] } } // Boolean 필드 처리
+					? { OR: filterData.isSmoking.map((value) => ({
+                          isSmoking: { equals: value }, // Boolean 필드 처리
+                      })), } // Boolean 필드 처리
 					: {},
 				filterData.cleaningFrequency?.length
 					? { cleaningFrequency: { in: filterData.cleaningFrequency } }
