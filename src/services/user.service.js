@@ -197,74 +197,63 @@ export const userService = {
 	filterUsers: async (filterData) => {
 		const filters = {
 			AND: [
-				{
-					dormitoryDuration: filterData.dormitoryDuration?.length
-						? { in: filterData.dormitoryDuration }
-						: undefined,
-				},
-				{
-					department: filterData.department?.length ? { in: filterData.department } : undefined,
-				},
-				{
-					studentId: filterData.studentId?.length ? { in: filterData.studentId } : undefined,
-				},
-				{
-					wakeUpTime: filterData.wakeUpTime?.length ? { in: filterData.wakeUpTime } : undefined,
-				},
-				{
-					sleepingTime: filterData.sleepingTime?.length
-						? { in: filterData.sleepingTime }
-						: undefined,
-				},
-				{
-					lightOutTime: filterData.lightOutTime?.length
-						? { in: filterData.lightOutTime }
-						: undefined,
-				},
-				{
-					showerTime: filterData.showerTime?.length ? { in: filterData.showerTime } : undefined,
-				},
-				{
-					isSmoking: filterData.isSmoking?.length ? { in: filterData.isSmoking } : undefined,
-				},
-				{
-					cleaningFrequency: filterData.cleaningFrequency?.length
-						? { in: filterData.cleaningFrequency }
-						: undefined,
-				},
-				{
-					itemSharingPreference: filterData.itemSharingPreference?.length
-						? { in: filterData.itemSharingPreference }
-						: undefined,
-				},
-				{
-					lifestyle: filterData.lifestyle?.length ? { in: filterData.lifestyle } : undefined,
-				},
-				{
-					mbti: filterData.mbti?.length ? { in: filterData.mbti } : undefined,
-				},
-				// 관계형 데이터에서 다중 값 OR 처리
-				{
-					foodPreferences: filterData.foodPreference?.length
-						? { some: { name: { in: filterData.foodPreference } } }
-						: undefined,
-				},
-				{
-					gamePreferences: filterData.gamePreference?.length
-						? { some: { name: { in: filterData.gamePreference } } }
-						: undefined,
-				},
-				{
-					studyPreferences: filterData.studyPreference?.length
-						? { some: { name: { in: filterData.studyPreference } } }
-						: undefined,
-				},
-				{
-					sleepingHabits: filterData.sleepingHabits?.length
-						? { some: { name: { in: filterData.sleepingHabits } } }
-						: undefined,
-				},
-			].filter((filter) => Object.values(filter).some((value) => value !== undefined)), // undefined 제거
+				filterData.dormitoryDuration?.length
+					? { dormitoryDuration: { in: filterData.dormitoryDuration } }
+					: {},
+				filterData.department?.length ? { department: { in: filterData.department } } : {},
+				filterData.studentId?.length ? { studentId: { in: filterData.studentId } } : {},
+				filterData.wakeUpTime?.length ? { wakeUpTime: { in: filterData.wakeUpTime } } : {},
+				filterData.sleepingTime?.length ? { sleepingTime: { in: filterData.sleepingTime } } : {},
+				filterData.lightOutTime?.length ? { lightOutTime: { in: filterData.lightOutTime } } : {},
+				filterData.showerTime?.length ? { showerTime: { in: filterData.showerTime } } : {},
+				filterData.isSmoking?.length
+					? { isSmoking: { equals: filterData.isSmoking[0] } } // Boolean 필드 처리
+					: {},
+				filterData.cleaningFrequency?.length
+					? { cleaningFrequency: { in: filterData.cleaningFrequency } }
+					: {},
+				filterData.itemSharingPreference?.length
+					? { itemSharingPreference: { in: filterData.itemSharingPreference } }
+					: {},
+				filterData.lifestyle?.length ? { lifestyle: { in: filterData.lifestyle } } : {},
+				filterData.mbti?.length ? { mbti: { in: filterData.mbti } } : {},
+				filterData.foodPreference?.length
+					? {
+							foodPreferences: {
+								some: {
+									name: { in: filterData.foodPreference },
+								},
+							},
+					  }
+					: {},
+				filterData.gamePreference?.length
+					? {
+							gamePreferences: {
+								some: {
+									name: { in: filterData.gamePreference },
+								},
+							},
+					  }
+					: {},
+				filterData.studyPreference?.length
+					? {
+							studyPreferences: {
+								some: {
+									name: { in: filterData.studyPreference },
+								},
+							},
+					  }
+					: {},
+				filterData.sleepingHabits?.length
+					? {
+							sleepingHabits: {
+								some: {
+									name: { in: filterData.sleepingHabits },
+								},
+							},
+					  }
+					: {},
+			],
 		};
 
 		const filteredUsers = await prisma.user.findMany({
