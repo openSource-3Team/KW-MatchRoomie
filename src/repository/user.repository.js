@@ -16,7 +16,12 @@ export const userRepository = {
 	findById: (id) =>
 		prisma.user.findUnique({
 			where: { id },
-			include: { sleepingHabits: true }, // 잠버릇 포함
+			include: {
+				gamePreferences: true, // 게임 선호 추가
+				studyPreferences: true, // 공부 선호 추가
+				foodPreferences: true, // 음식 선호 추가
+				sleepingHabits: true, // 잠버릇 추가
+			},
 		}),
 
 	filterUsers: async (filters) => {
